@@ -30,7 +30,7 @@ int main() {
 
 	//Create output file
 	TFile* output = new TFile("output.root","RECREATE");
-    TTree* summary_tree = fChain->CloneTree(0);
+    TTree* summary_tree = tree->CloneTree(0);
 
     //Add new branches
     //...

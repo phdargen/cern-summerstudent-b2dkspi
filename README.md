@@ -2,6 +2,47 @@
 
 Feasibility study for a measurement of CP violation in B -> D Ks pi decays at LHCb.
 
+# How to get started
+
+- login
+
+ssh username@lxplus.cern.ch -X -Y -o ServerAliveInterval=60
+
+- go to your work directory
+
+cd /afs/cern.ch/work/u/username
+
+- clone repo
+
+git clone ssh://git@gitlab.cern.ch:7999/phdargen/cern-summerstudent-b2dkspi.git
+
+cd cern-summerstudent-b2dkspi
+
+- setup ROOT
+
+/bin/bash
+
+source setup_root.sh
+
+- start interactive ROOT session and look at data
+
+root -l
+
+TFile *_file0 = TFile::Open("/eos/lhcb/user/p/phdargen/summerStudents21/Stripped/Data_B2DKspi_DD_11.root")
+
+new TBrowser
+
+t = (TTree*) _file0->Get("DecayTree")
+
+t->Draw("B_DTF_MM")
+
+- implement selection
+
+cd Selection
+
+source make.sh
+
+./selection
 
 
 # Useful stuff
@@ -40,6 +81,8 @@ Meetings
 https://indico.cern.ch/category/6734/overview?period=week
 
 B2OC-TD Tue 14.00 (bi-weekly)
+
 B2OC Amplitude Analyses Thu 10.00 Thu 14.00
+
 B2OC Thu 14.00
 

@@ -58,11 +58,15 @@ int main(int argc, char** argv)
     bool binned=false;
     
 	///Load file
-	TFile* file= new TFile("output.root ");
+	TFile* file= new TFile("../Selection/output.root ");
 	TTree* tree = (TTree*) file->Get("DecayTree");
+    
+    //Disable all but needed branches
+    tree->SetBranchStatus("*",0);  
+    tree->SetBranchStatus("B_DTF_MM",1);  
 
     //Define branches
-	RooRealVar B_DTF_MM("B_DTF_MM", "m(DK_{s}#pi)", 5200., 5600.,"MeV");
+	RooRealVar B_DTF_MM("B_DTF_MM", "m(DK_{s}#pi)", 5000., 5800.,"MeV");
 
     //Create RooDataSet
 	RooArgList list =  RooArgList(B_DTF_MM);
@@ -84,7 +88,7 @@ int main(int argc, char** argv)
 
 	RooGaussian Gauss1("Gauss1", "Gauss1", B_DTF_MM, mean, sigma1);
 
-    //Add a second Gaussian
+    //Add a second Gaussian 
     //...
     
 	///Background model

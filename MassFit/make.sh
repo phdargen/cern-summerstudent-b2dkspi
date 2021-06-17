@@ -4,5 +4,4 @@ function run(){
 	        $1
 	        echo
 }
-	
-run "g++ `root-config --cflags --libs`  -lRooFit -lRooFitCore -lHtml -lMinuit -c fit.cpp -o fit.o"
+run "g++ -o fit fit.cpp `root-config --cflags --libs`  -lRooFit -lRooFitCore -lHtml -lMinuit"
