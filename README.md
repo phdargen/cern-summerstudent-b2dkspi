@@ -82,7 +82,7 @@ https://indico.cern.ch/category/6734/overview?period=week
 
 B2OC-TD Tue 14.00 (bi-weekly)
 
-B2OC Amplitude Analyses Thu 10.00 Thu 14.00
+B2OC Amplitude Analyses Thu 10.00 (bi-weekly)
 
 B2OC Thu 14.00
 
