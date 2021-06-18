@@ -64,9 +64,6 @@ TMVAClassification( "BDTG", "MC" , "B2DKspi", "all",  "LL" )
 
 applyToAll()
 
-
-
-
 # Useful stuff
 
 Git tutorial
@@ -97,8 +94,9 @@ http://cds.cern.ch/record/2702424/files/CERN-THESIS-2019-216.pdf
 
 https://www.sciencedirect.com/science/article/pii/S2405601415006811?via%3Dihub
 
+# Meetings
 
-Meetings
+Sign up to B2OC mailing list:  lhcb-phys-cp-measurements-trees@cern.ch
 
 https://indico.cern.ch/category/6734/overview?period=week
 
@@ -108,3 +106,12 @@ B2OC Amplitude Analyses Thu 10.00 (bi-weekly)
 
 B2OC Thu 14.00
 
+# How to get help
+
+- Mattermost channels:
+
+https://mattermost.web.cern.ch/
+
+- Mailing lists: 
+
+https://groups.cern.ch/directory/Pages/categoryresults.aspx?Column=Experiment&ColumnDisplayName=Experiment&Value=LHCb
