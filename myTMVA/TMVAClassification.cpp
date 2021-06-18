@@ -96,16 +96,23 @@ void TMVAClassification( TString myMethodList = "BDTG", TString trainOn = "MC", 
    TMVA::Factory *factory = new TMVA::Factory( "TMVAClassification_" + decay + "_" + trainOn + "_" + run + "_" + Ks, outputFile, "!V:!Silent:Color:DrawProgressBar:Transformations=I;D;P;G,D:AnalysisType=Classification" );
 
    signal->SetBranchStatus("*",0);  // disable all branches
+   signal->SetBranchStatus("*PT*",1); 
    signal->SetBranchStatus("*CHI2*",1); 
    signal->SetBranchStatus("weight",1);
    signal->SetBranchStatus("run",1);
+   signal->SetBranchStatus("B_DTF_MM",1);
+   signal->SetBranchStatus("B_BKGCAT",1);
 
    background->SetBranchStatus("*",0);  // disable all branches
+   background->SetBranchStatus("*PT*",1); 
    background->SetBranchStatus("*CHI2*",1); 
    background->SetBranchStatus("weight",1);
    background->SetBranchStatus("run",1);
+   background->SetBranchStatus("B_DTF_MM",1);
+   background->SetBranchStatus("B_BKGCAT",1);
 
    // Define the input variables that shall be used for the MVA training
+   factory->AddVariable( "B_PT", "B_PT", "MeV", 'F' );
    factory->AddVariable( "PV_CHI2NDOF", "#chi^{2}_{DTF}/ndf", "", 'F' );
 
    // global event weights per tree (see below for setting event-wise weights)
@@ -115,19 +122,14 @@ void TMVAClassification( TString myMethodList = "BDTG", TString trainOn = "MC", 
    // Apply additional cuts on the signal and background samples (can be different)
    TCut mycuts;
    //if(run != "all")mycuts += "run == " + run.ReplaceAll("run","");
-   if(trainOn == "MC") mycuts += "B_MM > 5000 && B_MM < 6000 && B_BKGCAT < 30";
+   if(trainOn == "MC") mycuts += "B_DTF_MM > 5000 && B_DTF_MM < 6000 && B_BKGCAT < 30";
 
-   TCut mycutb = "B_MM > 5500";
+   TCut mycutb = "B_DTF_MM > 5500";
    //if(run != "all")mycutb += "run == " + run;
    
-    factory->AddSignalTree    ( signal,     signalWeight     );
-    factory->AddBackgroundTree( background, backgroundWeight );
-    factory->PrepareTrainingAndTestTree( mycuts,mycutb,"nTrain_Signal=0:nTrain_Background=0:SplitMode=Random:NormMode=NumEvents:!V" );
-
-    factory->AddSignalTree(signal_training,signalWeight,TMVA::Types::kTraining);
-	factory->AddSignalTree(signal_testing,signalWeight,TMVA::Types::kTesting);
-	factory->AddBackgroundTree(background_training,backgroundWeight,TMVA::Types::kTraining);
-	factory->AddBackgroundTree(background_testing,backgroundWeight,TMVA::Types::kTesting);
+   factory->AddSignalTree    ( signal,     signalWeight     );
+   factory->AddBackgroundTree( background, backgroundWeight );
+   factory->PrepareTrainingAndTestTree( mycuts,mycutb,"nTrain_Signal=0:nTrain_Background=0:SplitMode=Random:NormMode=NumEvents:!V" );
    //factory->SetSignalWeightExpression("weight");
 
    // ---- Book MVA methods

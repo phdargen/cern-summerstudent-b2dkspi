@@ -47,12 +47,12 @@ void TMVAClassificationApplication(TString decay = "B2DKspi", TString dataType =
    TString inDir = "/eos/lhcb/user/p/phdargen/summerStudents21/";
    TString outFileName = inDir+"BDT/";
     
+   // Change tp your selected files 
    if(dataType == "Data"){ 	  
     theTree->Add(inDir+"Stripped/Data_"+decay+"_LL_12.root");
     theTree->Add(inDir+"Stripped/Data_"+decay+"_DD_12.root");       
     outFileName += decay+"_data.root";
    }
-
    else if(dataType == "MC"){ 	  
       theTree->Add(inDir+"Stripped/MC_"+decay+"_DD_12.root");
       theTree->Add(inDir+"Stripped/MC_"+decay+"_LL_12.root");
@@ -74,9 +74,11 @@ void TMVAClassificationApplication(TString decay = "B2DKspi", TString dataType =
    TMVA::Reader *reader = new TMVA::Reader( "!Color:!Silent" );    
 
    // Create a set of variables and declare them to the reader    
+   Float_t r_B_PT;
    Float_t r_PV_CHI2NDOF;
 
    // Use same names and order as in TMVAClassification.cpp !
+   reader->AddVariable( "B_PT", &r_B_PT );
    reader->AddVariable( "PV_CHI2NDOF", &r_PV_CHI2NDOF );
 
    // --- Book the MVA methods
@@ -94,8 +96,9 @@ void TMVAClassificationApplication(TString decay = "B2DKspi", TString dataType =
    for(int i= 0 ; i < weightFiles.size(); i++) 
         reader->BookMVA( myMethod + weightFiles[i], prefix + weightFiles[i] + "_" + myMethod + ".weights.xml" ); 
 
-   Double_t PV_CHI2NDOF;
+   Double_t B_PT, PV_CHI2NDOF;
     
+   theTree->SetBranchAddress( "B_PT", &B_PT );
    theTree->SetBranchAddress( "PV_CHI2NDOF", &PV_CHI2NDOF );
    
    Int_t run, KsCat; 
@@ -119,13 +122,14 @@ void TMVAClassificationApplication(TString decay = "B2DKspi", TString dataType =
 
         theTree->GetEntry(ievt);
          
+        r_B_PT = float(B_PT);
         r_PV_CHI2NDOF = float(PV_CHI2NDOF);
 
-        TString methodName = myMethod + "run";
-        methodName += run;
+        // Might need to change this depending on your options in TMVAClassification.cpp and your workflow
+        TString methodName = myMethod; 
+        methodName += "all";
         if(KsCat == 0) methodName += "_LL" ;
         else methodName += "_DD";
-        methodName += "_all" ;
        
         BDTG_response=reader->EvaluateMVA(methodName);
         BDTG = double(BDTG_response);

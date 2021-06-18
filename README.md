@@ -44,6 +44,28 @@ source make.sh
 
 ./selection
 
+- setup TMVA
+
+cd myTMVA
+
+source setup.sh ../TMVA-v4.2.0/
+
+- train classifier
+
+root -l
+
+.L TMVAClassification.cpp
+
+TMVAClassification( "BDTG", "MC" , "B2DKspi", "all",  "LL" )
+
+- apply classifier
+
+.L TMVAClassificationApplication.cpp+
+
+applyToAll()
+
+
+
 
 # Useful stuff
 
