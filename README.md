@@ -88,6 +88,18 @@ RooFit
 
 https://root.cern.ch/download/doc/RooFit_Users_Manual_2.91-33.pdf
 
+Analysis notes
+
+Bs->DsKpipi:
+https://twiki.cern.ch/twiki/pub/LHCbPhysics/B2OCTD_Bs2DsKPiPi_TD/LHCb-ANA-2018-021_v9.pdf
+
+B->Dpi:
+https://twiki.cern.ch/twiki/pub/LHCbPhysics/B2OCTD_B2Dpi_3fb/LHCb-ANA-2016-064_CDS.pdf
+
+Ks selection:
+https://twiki.cern.ch/twiki/pub/LHCbPhysics/Bd2JpsieeKSBd2psi2SKS/LHCB-ANA-2014-085_v3.1.pdf
+https://twiki.cern.ch/twiki/pub/LHCbPhysics/Bu2KstarMuMuAngularAnalysis/LHCB-ANA-2018-022_v1r1.pdf
+
 Random LHCb resources 
 
 http://cds.cern.ch/record/2702424/files/CERN-THESIS-2019-216.pdf
