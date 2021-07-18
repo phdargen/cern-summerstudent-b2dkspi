@@ -26,7 +26,8 @@ void selection() {
   	//Needed branches (add some more)
         //Int_t KsCat;
         //bool hasRich;
-  	Double_t B_MM,D_MM,Ks_MM,B_PT,B_IPCHI2_OWNPV,B_FDCHI2_OWNPV,B_TAU,D_ENDVERTEX_Z, B_ENDVERTEX_Z,D_FDCHI2_ORIVX,D_DIRA_OWNPV,Ks_FDCHI2_ORIVX,Ks_DIRA_OWNPV,Ks_PT,B_ENDVERTEX_CHI2,B_ENDVERTEX_NDOF,B_BKGCAT,ProbNNpi,ProbNNk;
+  	Double_t B_MM,D_MM,Ks_MM,B_PT,B_IPCHI2_OWNPV,B_FDCHI2_OWNPV,B_TAU,D_ENDVERTEX_Z, B_ENDVERTEX_Z,D_FDCHI2_ORIVX,D_DIRA_OWNPV,Ks_FDCHI2_ORIVX,Ks_DIRA_OWNPV,Ks_PT,B_ENDVERTEX_CHI2,ProbNNpi,ProbNNk;
+	Int_t B_ENDVERTEX_NDOF, B_BKGCAT;
 	//tree->SetBranchAddress("KsCat",&KsCat);
         //tree->SetBranchAddress("hasRich",&hasRich);
         tree->SetBranchAddress("B_MM",&B_MM) ;
@@ -88,37 +89,40 @@ void selection() {
             //Add your cuts
             //
             //Kinematic
-            if(!B_PT>2000)continue;
-            if(!B_IPCHI2_OWNPV<17)continue;
-            if(!B_FDCHI2_OWNPV>150)continue;
-            if(!B_TAU>0.00025)continue;
-            if(!D_ENDVERTEX_Z - B_ENDVERTEX_Z > 0)continue;
-            if(!D_FDCHI2_ORIVX>0)continue;
-            if(!D_DIRA_OWNPV>0)continue;
-            if(!Ks_FDCHI2_ORIVX>0)continue;
-            if(!Ks_DIRA_OWNPV>0)continue;
-            if(!Ks_PT>400)continue;
+            if(B_IPCHI2_OWNPV>17)continue;
+            if(B_FDCHI2_OWNPV<150)continue;
+            if(B_TAU<0.00025)continue;
+            if(D_ENDVERTEX_Z - B_ENDVERTEX_Z < 0)continue;
+            if(D_FDCHI2_ORIVX<0)continue;
+            if(D_DIRA_OWNPV<0)continue;
+            if(Ks_FDCHI2_ORIVX<0)continue;
+            if(Ks_DIRA_OWNPV<0)continue;
+            if(Ks_PT>400)continue;
             //Quality
-            if(!B_ENDVERTEX_CHI2/B_ENDVERTEX_NDOF<7)continue;
+            if(B_ENDVERTEX_CHI2/B_ENDVERTEX_NDOF>7)continue;
             //if(!ProbNNpi>0.15)continue;
             //if(!ProbNNk>0.23)continue;
             //if(!KsCat==0)continue;
             //if(!hasRich==true)continue;
 
             //Fill histograms
-            BMass->Fill(B_MM);
+            
+	    BMass->Fill(B_MM);
             DMass->Fill(D_MM);
             KsMass->Fill(Ks_MM);
 
             //Fill output tree
             summary_tree->Fill();
+	
+
 	}
+
+cout << "after selection: " << summary_tree->GetEntries() << endl;
 	
 	//TCanvas *myC1 = new TCanvas("myC1","Masses",10,10,800,600);
 	
 	//myC1->Divide(3,1);
 	//myC1->cd(1);
-	BMass->Draw();
 	//myC1->cd(2);
 	//DMass->Draw();
 	//myC1->cd(3);
