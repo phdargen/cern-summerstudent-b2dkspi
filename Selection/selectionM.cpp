@@ -21,7 +21,7 @@ int main() {
 
 	 	//P: Load file		
     	TChain* tree=new TChain("DecayTree","RECREATE");
-		tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_11.root");
+		tree->Add("/eos/lhcb/user/p/phdargen/summerStudents21/Stripped/Data_B2DKspi_DD_11.root");
 		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_12.root");
 		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_15.root");
 		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_16.root");
@@ -61,7 +61,7 @@ int main() {
  		tree->SetBranchAddress("B_BKGCAT",&B_BKGCAT) ;
 
 		//M: Open root file (https://root.cern/manual/storing_root_objects/)
-		TFile* input = TFile::Open("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_11.root");
+		TFile* input = TFile::Open("/eos/lhcb/user/p/phdargen/summerStudents21/Stripped/Data_B2DKspi_DD_11.root");
 
 		//P: Create output file 
 		TFile* output = new TFile("output.root","RECREATE");
@@ -160,15 +160,15 @@ int main() {
 		//M: Canvas
 		TCanvas *cB_DTF_MM = new TCanvas("cB_DTF_MM","cB_DTF_MM Distribution");
 		hisB_DTF_MM -> Draw();
-		hisB_DTF_MM-> SaveAs("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Selection/hisB_DTF_MM.root");
+		hisB_DTF_MM-> SaveAs("/afs/cern.ch/work/m/mbuhayeu/public/cern-summerstudent-b2dkspi-master/Selection/hisB_DTF_MM.root");
 		
 		TCanvas *cD_MM = new TCanvas("cD_MM","cD_MM Distribution");
 		hisD_MM -> Draw();
-		hisD_MM-> SaveAs("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Selection/hisD_MM.root");
+		hisD_MM-> SaveAs("/afs/cern.ch/work/m/mbuhayeu/public/cern-summerstudent-b2dkspi-master/Selection/hisD_MM.root");
 		
 		TCanvas *cKs_MM = new TCanvas("cKs_MM","cKs_MM Distribution");
 		hisKs_MM -> Draw();
-		hisKs_MM-> SaveAs("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Selection/hisKs_MM.root");
+		hisKs_MM-> SaveAs("/afs/cern.ch/work/m/mbuhayeu/public/cern-summerstudent-b2dkspi-master/Selection/hisKs_MM.root");
 
 		output -> Close();
 		input -> Close();
