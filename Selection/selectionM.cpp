@@ -20,20 +20,20 @@ int main() {
 
 	 	//P: Load file		
     	TChain* tree=new TChain("DecayTree","RECREATE");
-		tree->Add("/home/maria/Work/Data/Data_B2DKspi_DD_11.root");
-		//tree->Add("/home/maria/Work/Data//Data_B2DKspi_DD_12.root");
-		//tree->Add("/home/maria/Work/Data//Data_B2DKspi_DD_15.root");
-		//tree->Add("/home/maria/Work/Data//Data_B2DKspi_DD_16.root");
-		//tree->Add("/home/maria/Work/Data//Data_B2DKspi_DD_17.root");
-		//tree->Add("/home/maria/Work/Data//Data_B2DKspi_DD_18.root");
-		//tree->Add("/home/maria/Work/Data//MC_B2DKspi_DD_12_BdDstKspi.root");
-		//tree->Add("/home/maria/Work/Data//MC_B2DKspi_DD_12_BsDstKsK.root");
-		//tree->Add("/home/maria/Work/Data//MC_B2DKspi_DD_12_BsDstKspi.root");
-		//tree->Add("/home/maria/Work/Data//DMC_B2DKspi_DD_12.root");
+		tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_11.root");
+		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_12.root");
+		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_15.root");
+		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_16.root");
+		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_17.root");
+		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_18.root");
+		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/MC_B2DKspi_DD_12_BdDstKspi.root");
+		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/MC_B2DKspi_DD_12_BsDstKsK.root");
+		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/MC_B2DKspi_DD_12_BsDstKspi.root");
+		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/DMC_B2DKspi_DD_12.root");
 
 
 	  	//P: Needed branches (add some more) 
-  		Double_t B_MM,B_PT,B_IPCHI2_OWNPV,B_FDCHI2_OWNPV,B_TAU,D_ENDVERTEX_Z, B_ENDVERTEX_Z;
+  		Double_t B_MM,B_DTF_MM,B_PT,B_IPCHI2_OWNPV,B_FDCHI2_OWNPV,B_TAU,D_ENDVERTEX_Z, B_ENDVERTEX_Z;
   		Double_t D_FDCHI2_ORIVX,D_DIRA_OWNPV,Ks_FDCHI2_ORIVX, D_MM, Ks_MM, ProbNNpi, ProbNNk;
   		Double_t Ks_PT, Ks_DIRA_OWNPV,B_ENDVERTEX_CHI2, TRACK_GhostProb;
   		Int_t B_BKGCAT, B_ENDVERTEX_NDOF, KsCat;
@@ -41,6 +41,7 @@ int main() {
   		
   		
 		tree->SetBranchAddress("B_MM",&B_MM) ;
+		tree->SetBranchAddress("B_DTF_MM",&B_DTF_MM) ;
     	tree->SetBranchAddress("B_PT",&B_PT) ;
     	tree->SetBranchAddress("B_IPCHI2_OWNPV",&B_IPCHI2_OWNPV) ;
 	   	tree->SetBranchAddress("B_FDCHI2_OWNPV",&B_FDCHI2_OWNPV) ;
@@ -63,17 +64,17 @@ int main() {
   		TTree* summary_tree = tree->CloneTree(0);
 
     	//P: Add new branches
-    	summary_tree->Branch("B_MM",&B_MM);
+    	summary_tree->Branch("B_DTF_MM",&B_DTF_MM);
     	summary_tree->Branch("D_MM",&D_MM);
     	summary_tree->Branch("Ks_MM",&Ks_MM);
 
     
-		//P: Define some histograms 
-    	TH1F *hB_MM = new TH1F("B_MM","B_MM",100,4700,6100);
-   		TH1F *hD_MM = new TH1F("D_MM","D_MM",100,0,2000);
-    	TH1F *hKs_MM = new TH1F("Ks_MM","Ks_MM",100,0,2000);
+		//P: Define some histograms
+    	TH1F *hB_DTF_MM = new TH1F("B_DTF_MM","B_DTF_MM",100,4700,6100);
+   		TH1F *hD_MM = new TH1F("D_MM","D_MM",100,0,1000);
+    	TH1F *hKs_MM = new TH1F("Ks_MM","Ks_MM",100,0,1000);
     	
-    	TH1F *hB_MM2 = new TH1F("B_MM","B_MM",100,4700,7000);
+    	TH1F *hB_DTF_MM2 = new TH1F("B_DTF_MM2","B_DTF_MM2",100,4700,7000);
 
     
     	//P: Loop over tree
@@ -110,14 +111,14 @@ int main() {
 		    
 		    		       
 		    //P: Fill histograms
-            hB_MM ->Fill(B_MM);
-            hB_MM -> SetFillColor(kBlue-7);
+            hB_DTF_MM -> Fill(B_DTF_MM);
+            hB_DTF_MM -> SetFillColor(kBlue-7);
             
-            hD_MM->Fill(D_MM);
-            hB_MM -> SetFillColor(kBlue-7);
+            hD_MM -> Fill(D_MM);
+            hD_MM -> SetFillColor(kBlue-7);
             
-            hKs_MM->Fill(Ks_MM);
-            hB_MM -> SetFillColor(kBlue-7);
+            hKs_MM -> Fill(Ks_MM);
+            hKs_MM -> SetFillColor(kBlue-7);
 
         
             //Fill output tree
@@ -131,23 +132,22 @@ int main() {
 				
 		//M: Canvas
 		
-		TCanvas *cB_MM = new TCanvas("cB_MM","cB_MM");
-		tree->Draw("B_MM");
+		TCanvas *cB_DTF_MM = new TCanvas("cB_DTF_MM","cB_DTF_MM");
+		tree -> Draw("B_DTF_MM");
 		summary_tree -> SetLineColor(kRed-5);
-		summary_tree->Draw("B_MM");
+		summary_tree -> Draw("B_DTF_MM");
 		
 		TCanvas *cD_MM = new TCanvas("cD_MM","cD_MM");
-		tree->Draw("D_MM");
+		tree -> Draw("D_MM");
 		summary_tree -> SetLineColor(kGreen-5);
-		summary_tree->Draw("D_MM");
+		summary_tree -> Draw("D_MM");
 		
 		TCanvas *cKs_MM = new TCanvas("cKs_MM","cKs_MM");
-		tree->Draw("Ks_MM");
+		tree -> Draw("Ks_MM");
 		summary_tree -> SetLineColor(kGreen-5);
-		summary_tree->Draw("Ks_MM");
+		summary_tree -> Draw("Ks_MM");
 
 		output -> Close();
 
 return 0;
 }
-
