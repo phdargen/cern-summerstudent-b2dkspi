@@ -1,6 +1,7 @@
 //Select events and fill them into a new tree
 //Philippe d'Argent
 #include <TChain.h>
+#include <THStack.h>
 #include <TTree.h>
 #include <TH1D.h>
 #include <TH2D.h>
@@ -32,7 +33,7 @@ int main() {
 		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/DMC_B2DKspi_DD_12.root");
 
 
-	  	//P: Needed branches (add some more) 
+	  	//P: Needed branches
   		Double_t B_MM,B_DTF_MM,B_PT,B_IPCHI2_OWNPV,B_FDCHI2_OWNPV,B_TAU,D_ENDVERTEX_Z, B_ENDVERTEX_Z;
   		Double_t D_FDCHI2_ORIVX,D_DIRA_OWNPV,Ks_FDCHI2_ORIVX, D_MM, Ks_MM, ProbNNpi, ProbNNk;
   		Double_t Ks_PT, Ks_DIRA_OWNPV,B_ENDVERTEX_CHI2, TRACK_GhostProb;
@@ -58,6 +59,8 @@ int main() {
  		tree->SetBranchAddress("KsCat",&KsCat) ;
  		tree->SetBranchAddress("B_BKGCAT",&B_BKGCAT) ;
 
+		//Open root file
+		TFile input("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_11.root");
 
 		//P: Create output file 
 		TFile* output = new TFile("output.root","RECREATE");
@@ -70,13 +73,31 @@ int main() {
 
     
 		//P: Define some histograms
-    	TH1F *hB_DTF_MM = new TH1F("B_DTF_MM","B_DTF_MM",100,4700,6100);
-   		TH1F *hD_MM = new TH1F("D_MM","D_MM",100,0,1000);
-    	TH1F *hKs_MM = new TH1F("Ks_MM","Ks_MM",100,0,1000);
+		//M: To draw histograms on the same plot
+		THStack *hisB_DTF_MM = new THStack("B_DTF_MM","B_DTF_MM 2"); 
+		THStack *hisD_MM = new THStack("D_MM","D_MM 2");
+		THStack *hisKs_MM = new THStack("Ks_MM","Ks_MM 2");
+		
+		//Histograms after the selection
+    	TH1F *hB_DTF_MM = new TH1F("B_DTF_MM","B_DTF_MM after",100,4700,6100);
+   		TH1F *hD_MM = new TH1F("D_MM","D_MM after",100,0,1000);
+    	TH1F *hKs_MM = new TH1F("Ks_MM","Ks_MM after",100,0,1000);
+		
+		//M: Histograms before the selection    	
+    	//TH1F *hbB_DTF_MM = new TH1F("B_DTF_MM","B_DTF_MM before",100,4700,6100);
+   		//TH1F *hbD_MM = new TH1F("D_MM","D_MM before",100,0,1000);
+    	//TH1F *hbKs_MM = new TH1F("Ks_MM","Ks_MM before",100,0,1000);
     	
-    	TH1F *hB_DTF_MM2 = new TH1F("B_DTF_MM2","B_DTF_MM2",100,4700,7000);
-
-    
+    	//M: Get hist from root file
+		TH1F *hbB_DTF_MM = (TH1F*)input.Get("B_DTF_MM");
+		TH1F *hbD_MM = (TH1F*)input.Get("D_MM");
+		TH1F *hbKs_MM = (TH1F*)input.Get("Ks_MM");
+		
+		//M: Fill THStack with hist before the selection
+		hisB_DTF_MM -> Add(hbB_DTF_MM);
+		hisD_MM -> Add(hbB_DTF_MM);
+		hisKs_MM -> Add(hbB_DTF_MM);
+    	    
     	//P: Loop over tree
     	int nEvents = tree->GetEntries();
   		for ( Int_t j = 0 ; j < nEvents ; j++ ) {
@@ -129,23 +150,22 @@ int main() {
 		cout << "after selection: " << summary_tree->GetEntries() << endl;
 
 		output->Write();
-				
+		
+		//M: Fill THStack with hist after the selection
+		hisB_DTF_MM->Add(hB_DTF_MM);
+		hisD_MM->Add(hB_DTF_MM);
+		hisKs_MM->Add(hB_DTF_MM);
+			
 		//M: Canvas
+		TCanvas *cB_DTF_MM = new TCanvas("B_DTF_MM","B_DTF_MM Distribution");
+		hisB_DTF_MM -> Draw();
+//		hisB_DTF_MM-> SaveAs("hisB_DTF_MM.png");
 		
-		TCanvas *cB_DTF_MM = new TCanvas("cB_DTF_MM","cB_DTF_MM");
-		tree -> Draw("B_DTF_MM");
-		summary_tree -> SetLineColor(kRed-5);
-		summary_tree -> Draw("B_DTF_MM");
+		TCanvas *cD_MM = new TCanvas("D_MM","D_MM Distribution");
+		hisD_MM -> Draw();
 		
-		TCanvas *cD_MM = new TCanvas("cD_MM","cD_MM");
-		tree -> Draw("D_MM");
-		summary_tree -> SetLineColor(kGreen-5);
-		summary_tree -> Draw("D_MM");
-		
-		TCanvas *cKs_MM = new TCanvas("cKs_MM","cKs_MM");
-		tree -> Draw("Ks_MM");
-		summary_tree -> SetLineColor(kGreen-5);
-		summary_tree -> Draw("Ks_MM");
+		TCanvas *cKs_MM = new TCanvas("Ks_MM","Ks_MM Distribution");
+		hisKs_MM -> Draw();
 
 		output -> Close();
 
