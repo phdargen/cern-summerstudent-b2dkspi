@@ -154,13 +154,15 @@ int main() {
 		//M: Canvas
 		TCanvas *cB_DTF_MM = new TCanvas("B_DTF_MM","B_DTF_MM Distribution");
 		hisB_DTF_MM -> Draw("B_DTF_MM");
-		hisB_DTF_MM-> SaveAs("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/hisB_DTF_MM.root");
+		hisB_DTF_MM-> SaveAs("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Selection/hisB_DTF_MM.root");
 		
 		TCanvas *cD_MM = new TCanvas("D_MM","D_MM Distribution");
 		hisD_MM -> Draw();
+		hisD_MM-> SaveAs("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Selection/hisD_MM.root");
 		
 		TCanvas *cKs_MM = new TCanvas("Ks_MM","Ks_MM Distribution");
 		hisKs_MM -> Draw();
+		hisKs_MM-> SaveAs("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Selection/hisKs_MM.root");
 
 		output -> Close();
 
