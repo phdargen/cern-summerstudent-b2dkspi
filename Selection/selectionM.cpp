@@ -42,6 +42,8 @@ int main() {
   		
   		
 		tree->SetBranchAddress("B_MM",&B_MM) ;
+		tree->SetBranchAddress("D_MM",&D_MM) ;
+		tree->SetBranchAddress("Ks_MM",&Ks_MM) ;
 		tree->SetBranchAddress("B_DTF_MM",&B_DTF_MM) ;
     	tree->SetBranchAddress("B_PT",&B_PT) ;
     	tree->SetBranchAddress("B_IPCHI2_OWNPV",&B_IPCHI2_OWNPV) ;
@@ -74,14 +76,14 @@ int main() {
     
 		//P: Define some histograms
 		//M: To draw histograms on the same plot (example https://root.cern.ch/doc/master/classTHStack.html)
-		THStack *hisB_DTF_MM = new THStack("B_DTF_MM","B_DTF_MM 2"); 
-		THStack *hisD_MM = new THStack("D_MM","D_MM 2");
-		THStack *hisKs_MM = new THStack("Ks_MM","Ks_MM 2");
+		THStack *hisB_DTF_MM = new THStack("hisB_DTF_MM","B_DTF_MM 2"); 
+		THStack *hisD_MM = new THStack("hisD_MM","D_MM 2");
+		THStack *hisKs_MM = new THStack("hisKs_MM","Ks_MM 2");
 		
 		//M: Histograms after the selection
-    	TH1F *hB_DTF_MM = new TH1F("B_DTF_MM","B_DTF_MM after",100,4700,6100);
-   		TH1F *hD_MM = new TH1F("D_MM","D_MM after",100,0,1000);
-    	TH1F *hKs_MM = new TH1F("Ks_MM","Ks_MM after",100,0,1000);
+    	TH1F *hB_DTF_MM = new TH1F("hB_DTF_MM","B_DTF_MM after",100,4700,6100);
+   		TH1F *hD_MM = new TH1F("hD_MM","D_MM after",100,1760,1980);
+    	TH1F *hKs_MM = new TH1F("hKs_MM","Ks_MM after",100,460,530);
     			
 		//M: Histograms before the selection 
 		TH1F *hbB_DTF_MM = (TH1F*)input.Get("B_DTF_MM");
@@ -101,23 +103,23 @@ int main() {
 		
 		    //P: Add your cuts
 		    //M: Ks category
-//		    if (KsCat != 1) continue;
+		    if (KsCat != 1) continue;
 		    
 		    //M: Kinematic		    
             if (B_PT<=2000) continue;
-//          if (B_IPCHI2_OWNPV>=20) continue;
-//			if (B_FDCHI2_OWNPV<=200) continue;
-//		    if (B_TAU<=0.0001) continue;
-//		   	if (D_ENDVERTEX_Z - B_ENDVERTEX_Z <= 0) continue;
-//		   	if (D_FDCHI2_ORIVX <= 0) continue;
-//		   	if (D_DIRA_OWNPV <= 0) continue;
-///		   	if (Ks_FDCHI2_ORIVX <= 0) continue; 
-//		   	if (Ks_DIRA_OWNPV <= 0) continue; 
-//		   	if (Ks_PT <= 200) continue;
+            if (B_IPCHI2_OWNPV>=20) continue;
+			if (B_FDCHI2_OWNPV<=200) continue;
+		    if (B_TAU<=0.0001) continue;
+		   	if (D_ENDVERTEX_Z - B_ENDVERTEX_Z <= 0) continue;
+		   	if (D_FDCHI2_ORIVX <= 0) continue;
+		   	if (D_DIRA_OWNPV <= 0) continue;
+		   	if (Ks_FDCHI2_ORIVX <= 0) continue; 
+		   	if (Ks_DIRA_OWNPV <= 0) continue; 
+		   	if (Ks_PT <= 200) continue;
 		   	
 		    //M: Quality
-//		   	if (TRACK_GhostProb >= 0.5) continue;
-//		    if ((B_ENDVERTEX_CHI2/B_ENDVERTEX_NDOF) >= 10) continue;
+		   	if (TRACK_GhostProb >= 0.5) continue;
+		    if ((B_ENDVERTEX_CHI2/B_ENDVERTEX_NDOF) >= 10) continue;
 		    //if (B_BKGCAT >= 30) continue; // Only for MC!
 		    		    
 		    //M: PID
@@ -148,19 +150,19 @@ int main() {
 		
 		//M: Fill THStack with hist after the selection
 		hisB_DTF_MM -> Add(hB_DTF_MM);
-		hisD_MM -> Add(hB_DTF_MM);
-		hisKs_MM -> Add(hB_DTF_MM);
+		hisD_MM -> Add(hD_MM);
+		hisKs_MM -> Add(hKs_MM);
 			
 		//M: Canvas
-		TCanvas *cB_DTF_MM = new TCanvas("B_DTF_MM","B_DTF_MM Distribution");
-		hisB_DTF_MM -> Draw("B_DTF_MM");
+		TCanvas *cB_DTF_MM = new TCanvas("cB_DTF_MM","cB_DTF_MM Distribution");
+		hisB_DTF_MM -> Draw();
 		hisB_DTF_MM-> SaveAs("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Selection/hisB_DTF_MM.root");
 		
-		TCanvas *cD_MM = new TCanvas("D_MM","D_MM Distribution");
+		TCanvas *cD_MM = new TCanvas("cD_MM","cD_MM Distribution");
 		hisD_MM -> Draw();
 		hisD_MM-> SaveAs("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Selection/hisD_MM.root");
 		
-		TCanvas *cKs_MM = new TCanvas("Ks_MM","Ks_MM Distribution");
+		TCanvas *cKs_MM = new TCanvas("cKs_MM","cKs_MM Distribution");
 		hisKs_MM -> Draw();
 		hisKs_MM-> SaveAs("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Selection/hisKs_MM.root");
 
