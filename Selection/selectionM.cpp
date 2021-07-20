@@ -40,8 +40,7 @@ int main() {
   		Int_t B_BKGCAT, B_ENDVERTEX_NDOF, KsCat;
   		bool hasRich; 
   		
-  		
-		tree->SetBranchAddress("B_MM",&B_MM) ;
+  		tree->SetBranchAddress("B_MM",&B_MM) ;
 		tree->SetBranchAddress("D_MM",&D_MM) ;
 		tree->SetBranchAddress("Ks_MM",&Ks_MM) ;
 		tree->SetBranchAddress("B_DTF_MM",&B_DTF_MM) ;
@@ -61,8 +60,8 @@ int main() {
  		tree->SetBranchAddress("KsCat",&KsCat) ;
  		tree->SetBranchAddress("B_BKGCAT",&B_BKGCAT) ;
 
-		//M: Open root file
-		TFile input("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_11.root");
+		//M: Open root file (https://root.cern/manual/storing_root_objects/)
+		TFile* input = TFile::Open("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_11.root");
 
 		//P: Create output file 
 		TFile* output = new TFile("output.root","RECREATE");
@@ -86,9 +85,14 @@ int main() {
     	TH1F *hKs_MM = new TH1F("hKs_MM","Ks_MM after",100,460,530);
     			
 		//M: Histograms before the selection 
-		TH1F *hbB_DTF_MM = (TH1F*)input.Get("B_DTF_MM");
-		TH1F *hbD_MM = (TH1F*)input.Get("D_MM");
-		TH1F *hbKs_MM = (TH1F*)input.Get("Ks_MM");
+
+		TH1F *hbB_DTF_MM = (TH1F*)input -> Get("B_DTF_MM");
+		TH1F *hbD_MM = (TH1F*)input -> Get("D_MM");
+		TH1F *hbKs_MM = (TH1F*)input -> Get("Ks_MM");
+
+		//hbB_DTF_MM->SetFillColor(kRed);
+		//hbD_MM->SetFillColor(kRed);
+		//hbKs_MM->SetFillColor(kRed);
 		
 		//M: Fill THStack with hist before the selection
 		hisB_DTF_MM -> Add(hbB_DTF_MM);
@@ -167,6 +171,7 @@ int main() {
 		hisKs_MM-> SaveAs("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Selection/hisKs_MM.root");
 
 		output -> Close();
+		input -> Close();
 
 return 0;
 }
