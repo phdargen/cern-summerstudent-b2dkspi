@@ -37,6 +37,9 @@ int main() {
   		Double_t B_MM,B_DTF_MM,B_PT,B_IPCHI2_OWNPV,B_FDCHI2_OWNPV,B_TAU,D_ENDVERTEX_Z, B_ENDVERTEX_Z;
   		Double_t D_FDCHI2_ORIVX,D_DIRA_OWNPV,Ks_FDCHI2_ORIVX, D_MM, Ks_MM, ProbNNpi, ProbNNk;
   		Double_t Ks_PT, Ks_DIRA_OWNPV,B_ENDVERTEX_CHI2, TRACK_GhostProb;
+  		
+  		Double_t K_D_ProbNNk, pi1_D_ProbNNk, pi2_D_ProbNNk, pi_ProbNNk, pim_Ks_ProbNNk, pip_Ks_ProbNNk;
+  		Double_t K_D_ProbNNpi,pi1_D_ProbNNpi,pi2_D_ProbNNpi,pi_ProbNNpi,pim_Ks_ProbNNpi,pip_Ks_ProbNNpi;
   		bool K_D_hasRich, pi1_D_hasRich, pi2_D_hasRich, pi_hasRich, pim_Ks_hasRich, pip_Ks_hasRich;
   		Int_t B_BKGCAT, B_ENDVERTEX_NDOF, KsCat;
   		
@@ -59,6 +62,20 @@ int main() {
  		tree->SetBranchAddress("B_ENDVERTEX_NDOF",&B_ENDVERTEX_NDOF) ;
  		tree->SetBranchAddress("KsCat",&KsCat) ;
  		tree->SetBranchAddress("B_BKGCAT",&B_BKGCAT);
+ 		
+ 		tree->SetBranchAddress("K_D_ProbNNk",&K_D_ProbNNk);
+ 		tree->SetBranchAddress("pi1_D_ProbNNk",&pi1_D_ProbNNk);
+ 		tree->SetBranchAddress("pi2_D_ProbNNk",&pi2_D_ProbNNk);
+ 		tree->SetBranchAddress("pi_ProbNNk",&pi_ProbNNk);
+ 		tree->SetBranchAddress("pim_Ks_ProbNNk",&pim_Ks_ProbNNk);
+ 		tree->SetBranchAddress("pip_Ks_ProbNNk",&pip_Ks_ProbNNk);
+ 		
+ 		tree->SetBranchAddress("K_D_ProbNNpi",&K_D_ProbNNpi);
+ 		tree->SetBranchAddress("pi1_D_ProbNNpi",&pi1_D_ProbNNpi);
+ 		tree->SetBranchAddress("pi2_D_ProbNNpi",&pi2_D_ProbNNpi);
+ 		tree->SetBranchAddress("pi_ProbNNpi",&pi_ProbNNpi);
+ 		tree->SetBranchAddress("pim_Ks_ProbNNpi",&pim_Ks_ProbNNpi);
+ 		tree->SetBranchAddress("pip_Ks_ProbNNpi",&pip_Ks_ProbNNpi);
  		
  		tree->SetBranchAddress("K_D_hasRich",&K_D_hasRich);
  		tree->SetBranchAddress("pi1_D_hasRich",&pi1_D_hasRich);
@@ -116,13 +133,13 @@ int main() {
             if (B_PT<=2000) continue;
             if (B_IPCHI2_OWNPV>=20) continue;
 			if (B_FDCHI2_OWNPV<=200) continue;
-		    if (B_TAU<=0.0001) continue;
+		    if (B_TAU<=0.0004) continue;
 		   	if (D_ENDVERTEX_Z - B_ENDVERTEX_Z <= 0) continue;
 		   	if (D_FDCHI2_ORIVX <= 0) continue;
 		   	if (D_DIRA_OWNPV <= 0) continue;
 		   	if (Ks_FDCHI2_ORIVX <= 0) continue; 
 		   	if (Ks_DIRA_OWNPV <= 0) continue; 
-		   	if (Ks_PT <= 200) continue;
+		   	if (Ks_PT <= 600) continue;
 		   	
 		    //M: Quality
 		   	if (TRACK_GhostProb >= 0.5) continue;
@@ -130,24 +147,24 @@ int main() {
 		    //if (B_BKGCAT >= 30) continue; // Only for MC!
 		    		    
 		    //M: PID
-		    //if (K_D_ProbNNpi <= 0.2) continue; //K_D_ProbNNpi, pi1_D_ProbNNpi, pi2_D_ProbNNpi, pi_D_ProbNNpi, pim_Ks_ProbNNpi, pip_Ks_ProbNNpi
+		    //if (K_D_ProbNNpi <= 0.2) continue;//K_D_ProbNNpi,pi1_D_ProbNNpi,pi2_D_ProbNNpi,pi_D_ProbNNpi,pim_Ks_ProbNNpi,pip_Ks_ProbNNpi
 		    //if (pi1_D_ProbNNpi <= 0.2) continue;
 		    //if (pi2_D_ProbNNpi <= 0.2) continue;
-		    //if (pi_D_ProbNNpi <= 0.2) continue;
+		    if (pi_ProbNNpi <= 0.2) continue;
 		    //if (pim_Ks_ProbNNpi <= 0.2) continue;
 		    //if (pip_Ks_ProbNNpi <= 0.2) continue;
 		    
-		    //if (K_D_ProbNNk <= 0.3) continue; //K_D_ProbNNk, pi1_D_ProbNNk, pi2_D_ProbNNk, pi_D_ProbNNk, pim_Ks_ProbNNk, pip_Ks_ProbNNk
+		    if (K_D_ProbNNk <= 0.3) continue; //K_D_ProbNNk, pi1_D_ProbNNk, pi2_D_ProbNNk, pi_D_ProbNNk, pim_Ks_ProbNNk, pip_Ks_ProbNNk
 		    //if (pi1_D_ProbNNk <= 0.3) continue;
 		    //if (pi2_D_ProbNNk <= 0.3) continue;
-		    //if (pi_D_ProbNNk <= 0.3) continue;
+		    //if (pi_ProbNNk <= 0.3) continue;
 		    //if (pim_Ks_ProbNNk <= 0.3) continue;
 		    //if (pip_Ks_ProbNNk <= 0.3) continue;
 		    
 		    if (K_D_hasRich != true) continue; //K_D_hasRich, pi1_D_hasRich, pi2_D_hasRich, pi_D_hasRich, pim_Ks_hasRich, pip_Ks_hasRich
 		    //if (pi1_D_hasRich != true) continue;
 		    //if (pi2_D_hasRich != true) continue;
-		    //if (pi_hasRich != true) continue;
+		    if (pi_hasRich != true) continue;
 		    //if (pim_Ks_hasRich != true) continue;
 		    //if (pip_Ks_hasRich != true) continue;
 		    
