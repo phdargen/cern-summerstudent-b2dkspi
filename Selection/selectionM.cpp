@@ -63,9 +63,11 @@ int main() {
  		tree->SetBranchAddress("B_ENDVERTEX_CHI2",&B_ENDVERTEX_CHI2) ;
  		tree->SetBranchAddress("B_ENDVERTEX_NDOF",&B_ENDVERTEX_NDOF) ;
  		tree->SetBranchAddress("KsCat",&KsCat) ;
- 		// Only for MC
+ 		
+ 		//M: Only for MC
  		tree->SetBranchAddress("B_BKGCAT",&B_BKGCAT);
- 		// PID
+ 		
+ 		//M: PID
  		tree->SetBranchAddress("K_D_ProbNNk",&K_D_ProbNNk);
  		tree->SetBranchAddress("pi1_D_ProbNNk",&pi1_D_ProbNNk);
  		tree->SetBranchAddress("pi2_D_ProbNNk",&pi2_D_ProbNNk);
@@ -86,15 +88,18 @@ int main() {
  		tree->SetBranchAddress("pi_hasRich",&pi_hasRich);
  		tree->SetBranchAddress("pim_Ks_hasRich",&pim_Ks_hasRich);
  		tree->SetBranchAddress("pip_Ks_hasRich",&pip_Ks_hasRich);
- 		//Trigger selection
+ 		
+ 		//M: Trigger selection
  		tree->SetBranchAddress("B_L0Global_TIS",&B_L0Global_TIS) ;
  		tree->SetBranchAddress("B_L0HadronDecision_TOS",&B_L0HadronDecision_TOS) ;
- 		//2011-2012
+ 		
+ 		//M: 2011-2012
  		tree->SetBranchAddress("B_Hlt1TrackAllL0Decision_TOS",&B_Hlt1TrackAllL0Decision_TOS) ;
  		tree->SetBranchAddress("B_Hlt2Topo2BodyBBDTDecision_TOS",&B_Hlt2Topo2BodyBBDTDecision_TOS) ;
  		tree->SetBranchAddress("B_Hlt2Topo3BodyBBDTDecision_TOS",&B_Hlt2Topo3BodyBBDTDecision_TOS) ;
  		tree->SetBranchAddress("B_Hlt2Topo4BodyBBDTDecision_TOS",&B_Hlt2Topo4BodyBBDTDecision_TOS) ; 	
- 		//2015-2018	
+ 		
+ 		//M: 2015-2018	
  		//tree->SetBranchAddress("B_Hlt1TrackMVADecision_TOS",&B_Hlt1TrackMVADecision_TOS) ;
  		//tree->SetBranchAddress("B_Hlt1TwoTrackMVADecision_TOS",&B_Hlt1TwoTrackMVADecision_TOS) ;
  		//tree->SetBranchAddress("B_Hlt2Topo2BodyDecision_TOS",&B_Hlt2Topo2BodyDecision_TOS) ;
@@ -113,29 +118,18 @@ int main() {
     	summary_tree->Branch("B_DTF_MM",&B_DTF_MM);
     	summary_tree->Branch("D_MM",&D_MM);
     	summary_tree->Branch("Ks_MM",&Ks_MM);
-
-    
+ 
 		//P: Define some histograms
-		//M: To draw histograms on the same plot (example https://root.cern.ch/doc/master/classTHStack.html)
-		//THStack *hisB_DTF_MM = new THStack("hisB_DTF_MM","B_DTF_MM 2"); 
-		//THStack *hisD_MM = new THStack("hisD_MM","D_MM 2");
-		//THStack *hisKs_MM = new THStack("hisKs_MM","Ks_MM 2");
-		
 		//M: Histograms after the selection
     	TH1F *hB_DTF_MM = new TH1F("hB_DTF_MM","B_DTF_MM after",100,4700,6100);
    		TH1F *hD_MM = new TH1F("hD_MM","D_MM after",100,1760,1980);
     	TH1F *hKs_MM = new TH1F("hKs_MM","Ks_MM after",100,460,530);
     			
 		//M: Histograms before the selection 
-
 		TH1F *hbB_DTF_MM = (TH1F*)input -> Get("B_DTF_MM");
 		TH1F *hbD_MM = (TH1F*)input -> Get("D_MM");
 		TH1F *hbKs_MM = (TH1F*)input -> Get("Ks_MM");
 
-		//hbB_DTF_MM->SetFillColor(kRed);
-		//hbD_MM->SetFillColor(kRed);
-		//hbKs_MM->SetFillColor(kRed);
-    	    
     	//P: Loop over tree
     	int nEvents = tree->GetEntries();
   		for ( Int_t j = 0 ; j < nEvents ; j++ ) {
@@ -145,14 +139,15 @@ int main() {
 		    //P: Add your cuts
 		    
 			//M: Trigger selection:
-			if (B_L0HadronDecision_TOS != true || B_L0Global_TIS != true) continue;
-			//2011-2012
+			if ((B_L0HadronDecision_TOS || B_L0Global_TIS) != true) continue;
+			
+			//M: 2011-2012
 			if (B_Hlt1TrackAllL0Decision_TOS != true) continue;
-			//if (B_Hlt2Topo2BodyBBDTDecision_TOS || B_Hlt2Topo3BodyBBDTDecision_TOS || B_Hlt2Topo4BodyBBDTDecision_TOS != true) continue;
-			if (B_Hlt2Topo2BodyBBDTDecision_TOS!= true || B_Hlt2Topo3BodyBBDTDecision_TOS!= true || B_Hlt2Topo4BodyBBDTDecision_TOS != true) continue;
-			//2015-2018
-			//if (B_Hlt1TrackMVADecision_TOS!= true || B_Hlt1TwoTrackMVADecision_TOS != true) continue;//2015-2018
-			//if (B_Hlt2Topo2BodyDecision_TOS!= true || B_Hlt2Topo3BodyDecision_TOS!= true || B_Hlt2Topo4BodyDecision_TOS != true) continue;
+			if ((B_Hlt2Topo2BodyBBDTDecision_TOS || B_Hlt2Topo3BodyBBDTDecision_TOS || B_Hlt2Topo4BodyBBDTDecision_TOS) != true) continue;
+			
+			//M: 2015-2018
+			//if ((B_Hlt1TrackMVADecision_TOS!= true || B_Hlt1TwoTrackMVADecision_TOS) != true) continue;//2015-2018
+			//if ((B_Hlt2Topo2BodyDecision_TOS!= true || B_Hlt2Topo3BodyDecision_TOS!= true || B_Hlt2Topo4BodyDecision_TOS) != true) continue;
 		
 		    //M: Ks category
 		    if (KsCat != 1) continue;
@@ -176,11 +171,11 @@ int main() {
 		    		    
 		    //M: PID
 		    //if (K_D_ProbNNpi <= 0.1) continue;//0;
-		    if (pi1_D_ProbNNpi <= 0.1) continue; // 0
-		    if (pi2_D_ProbNNpi <= 0.1) continue; // 0
+		    //if (pi1_D_ProbNNpi <= 0.1) continue; // 0
+		    //if (pi2_D_ProbNNpi <= 0.1) continue; // 0
 		    if (pi_ProbNNpi <= 0.1) continue; // 88188
-		    if (pim_Ks_ProbNNpi <= 0.1) continue; // 0
-		    if (pip_Ks_ProbNNpi <= 0.1) continue; // 0
+		    //if (pim_Ks_ProbNNpi <= 0.1) continue; // 0
+		    //if (pip_Ks_ProbNNpi <= 0.1) continue; // 0
 		    
 		    if (K_D_ProbNNk <= 0.15) continue; // 79926;
 		    //if (pi1_D_ProbNNk <= 0.15) continue; //0
@@ -190,11 +185,11 @@ int main() {
 		    //if (pip_Ks_ProbNNk <= 0.15) continue; //0
 		    
 		    if (K_D_hasRich != true) continue; //K_D_hasRich, pi1_D_hasRich, pi2_D_hasRich, pi_D_hasRich, pim_Ks_hasRich, pip_Ks_hasRich
-		    if (pi1_D_hasRich != true) continue;
-		    if (pi2_D_hasRich != true) continue;
+		    //if (pi1_D_hasRich != true) continue;
+		    //if (pi2_D_hasRich != true) continue;
 		    if (pi_hasRich != true) continue;
-		    if (pim_Ks_hasRich != true) continue;
-		    if (pip_Ks_hasRich != true) continue;
+		    //if (pim_Ks_hasRich != true) continue;
+		    //if (pip_Ks_hasRich != true) continue;
 		    
 		    		       
 		    //P: Fill histograms
