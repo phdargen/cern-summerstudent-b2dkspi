@@ -21,8 +21,8 @@ int main() {
 
 	 	//P: Load file		
     	TChain* tree=new TChain("DecayTree","RECREATE");
-		tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_11.root");
-		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_12.root");
+		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_11.root");
+		tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_12.root");
 		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_15.root");
 		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_16.root");
 		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_17.root");
@@ -106,10 +106,6 @@ int main() {
  		//tree->SetBranchAddress("B_Hlt2Topo3BodyDecision_TOS",&B_Hlt2Topo3BodyDecision_TOS) ;
  		//tree->SetBranchAddress("B_Hlt2Topo4BodyDecision_TOS",&B_Hlt2Topo4BodyDecision_TOS) ;	
 
-		//M: Open root file (https://root.cern/manual/storing_root_objects/)
-		TFile* input = TFile::Open("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_11.root");
-		TTree* t = (TTree*) input->Get("DecayTree");
-
 		//P: Create output file 
 		TFile* output = new TFile("output.root","RECREATE");
   		TTree* summary_tree = tree->CloneTree(0);
@@ -120,11 +116,6 @@ int main() {
     	summary_tree->Branch("Ks_MM",&Ks_MM);
  
 		//P: Define some histograms
-		//M: Histograms before the selection 
-		TH1F *hbB_DTF_MM = (TH1F*)input -> Get("B_DTF_MM");
-		TH1F *hbD_MM = (TH1F*)input -> Get("D_MM");
-		TH1F *hbKs_MM = (TH1F*)input -> Get("Ks_MM");
-		
 		//M: Histograms after the selection
     	TH1F *hB_DTF_MM = new TH1F("hB_DTF_MM","B_DTF_MM after",100,4700,6100);
    		TH1F *hD_MM = new TH1F("hD_MM","D_MM after",100,1760,1980);
@@ -215,31 +206,30 @@ int main() {
 		
 		//M: Canvas
 		TCanvas *cB_DTF_MM = new TCanvas("ccB_DTF_MM","ccB_DTF_MM",1400,1000);
-		t -> SetFillColor(kGreen-5);
-		t -> SetLineColor(kGreen);
-		t->Draw("B_DTF_MM");
+		tree -> SetFillColor(kGreen-5);
+		tree -> SetLineColor(kGreen);
+		tree->Draw("B_DTF_MM");
 		hB_DTF_MM -> Draw("same");
 		cB_DTF_MM -> SaveAs("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Selection/cB_DTF_MM.root");
 		cB_DTF_MM -> SaveAs("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Selection/cB_DTF_MM.eps");
 				
 		TCanvas *cD_MM = new TCanvas("ccD_MM","ccD_MM",1400,1000);
-		t -> SetFillColor(kGreen-5);
-		t -> SetLineColor(kGreen);
-		t->Draw("D_MM");
+		tree -> SetFillColor(kGreen-5);
+		tree -> SetLineColor(kGreen);
+		tree->Draw("D_MM");
 		hD_MM -> Draw("same");
 		cD_MM -> SaveAs("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Selection/cD_MM.root");
 		cD_MM -> SaveAs("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Selection/cD_MM.eps");
 			
 		TCanvas *cKs_MM = new TCanvas("ccKs_MM","ccKs_MM",1400,1000);
-		t -> SetFillColor(kGreen-5);
-		t -> SetLineColor(kGreen);
-		t->Draw("Ks_MM");
+		tree -> SetFillColor(kGreen-5);
+		tree -> SetLineColor(kGreen);
+		tree->Draw("Ks_MM");
 		hKs_MM -> Draw("same");
 		cKs_MM -> SaveAs("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Selection/cKs_MM.root");
 		cKs_MM -> SaveAs("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Selection/cKs_MM.eps");
 		
 		output -> Close();
-		input -> Close();
 
 return 0;
 }
