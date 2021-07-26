@@ -65,7 +65,7 @@ int main() {
  		tree->SetBranchAddress("KsCat",&KsCat) ;
  		
  		//M: Only for MC
- 		tree->SetBranchAddress("B_BKGCAT",&B_BKGCAT);
+ 		//tree->SetBranchAddress("B_BKGCAT",&B_BKGCAT);
  		
  		//M: PID
  		tree->SetBranchAddress("K_D_ProbNNk",&K_D_ProbNNk);
@@ -120,15 +120,16 @@ int main() {
     	summary_tree->Branch("Ks_MM",&Ks_MM);
  
 		//P: Define some histograms
-		//M: Histograms after the selection
-    	TH1F *hB_DTF_MM = new TH1F("hB_DTF_MM","B_DTF_MM after",100,4700,6100);
-   		TH1F *hD_MM = new TH1F("hD_MM","D_MM after",100,1760,1980);
-    	TH1F *hKs_MM = new TH1F("hKs_MM","Ks_MM after",100,460,530);
-    			
 		//M: Histograms before the selection 
 		TH1F *hbB_DTF_MM = (TH1F*)input -> Get("B_DTF_MM");
 		TH1F *hbD_MM = (TH1F*)input -> Get("D_MM");
 		TH1F *hbKs_MM = (TH1F*)input -> Get("Ks_MM");
+		
+		//M: Histograms after the selection
+    	TH1F *hB_DTF_MM = new TH1F("hB_DTF_MM","B_DTF_MM after",100,4700,6100);
+   		TH1F *hD_MM = new TH1F("hD_MM","D_MM after",100,1760,1980);
+    	TH1F *hKs_MM = new TH1F("hKs_MM","Ks_MM after",100,460,530);
+   			
 
     	//P: Loop over tree
     	int nEvents = tree->GetEntries();
@@ -155,7 +156,7 @@ int main() {
 		    //M: Kinematic		    
             if (B_PT<=2000) continue;
             if (B_IPCHI2_OWNPV>=20) continue;
-			if (B_FDCHI2_OWNPV<=200) continue;
+			if (B_FDCHI2_OWNPV<=100) continue;
 		    if (B_TAU<=0.0001) continue;
 		   	if (D_ENDVERTEX_Z - B_ENDVERTEX_Z <= 0) continue;
 		   	if (D_FDCHI2_ORIVX <= 0) continue;
@@ -170,26 +171,26 @@ int main() {
 		    //if (B_BKGCAT >= 30) continue; // Only for MC!
 		    		    
 		    //M: PID
-		    //if (K_D_ProbNNpi <= 0.1) continue;//0;
-		    //if (pi1_D_ProbNNpi <= 0.1) continue; // 0
-		    //if (pi2_D_ProbNNpi <= 0.1) continue; // 0
+		    //if (K_D_ProbNNpi <= 0.1) continue;//0; - 
+		    if (pi1_D_ProbNNpi <= 0.1) continue; // 0
+		    if (pi2_D_ProbNNpi <= 0.1) continue; // 0
 		    if (pi_ProbNNpi <= 0.1) continue; // 88188
-		    //if (pim_Ks_ProbNNpi <= 0.1) continue; // 0
-		    //if (pip_Ks_ProbNNpi <= 0.1) continue; // 0
+		    if (pim_Ks_ProbNNpi <= 0.1) continue; // 0
+		    if (pip_Ks_ProbNNpi <= 0.1) continue; // 0
 		    
 		    if (K_D_ProbNNk <= 0.15) continue; // 79926;
-		    //if (pi1_D_ProbNNk <= 0.15) continue; //0
-		    //if (pi2_D_ProbNNk <= 0.15) continue; //0
-		    //if (pi_ProbNNk <= 0.15) continue; //0
-		    //if (pim_Ks_ProbNNk <= 0.15) continue; //0
-		    //if (pip_Ks_ProbNNk <= 0.15) continue; //0
+		    //if (pi1_D_ProbNNk <= 0.15) continue; //0 - 
+		    //if (pi2_D_ProbNNk <= 0.15) continue; //0 - 
+		    //if (pi_ProbNNk <= 0.15) continue; //0 - 
+		    //if (pim_Ks_ProbNNk <= 0.15) continue; //0 - 
+		    //if (pip_Ks_ProbNNk <= 0.15) continue; //0 -
 		    
 		    if (K_D_hasRich != true) continue; //K_D_hasRich, pi1_D_hasRich, pi2_D_hasRich, pi_D_hasRich, pim_Ks_hasRich, pip_Ks_hasRich
-		    //if (pi1_D_hasRich != true) continue;
-		    //if (pi2_D_hasRich != true) continue;
+		    if (pi1_D_hasRich != true) continue;
+		    if (pi2_D_hasRich != true) continue;
 		    if (pi_hasRich != true) continue;
-		    //if (pim_Ks_hasRich != true) continue;
-		    //if (pip_Ks_hasRich != true) continue;
+		    if (pim_Ks_hasRich != true) continue;
+		    if (pip_Ks_hasRich != true) continue;
 		    
 		    		       
 		    //P: Fill histograms
