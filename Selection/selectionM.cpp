@@ -22,19 +22,20 @@ int main() {
 	 	//P: Load file		
     	TChain* tree=new TChain("DecayTree","RECREATE");
 		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_11.root");
-		tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_12.root");
+		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_12.root");
 		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_15.root");
 		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_16.root");
 		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_17.root");
-		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_18.root");
+		tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_18.root"); 
+		//M: MC
+		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/MC_B2DKspi_DD_12.root");
 		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/MC_B2DKspi_DD_12_BdDstKspi.root");
 		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/MC_B2DKspi_DD_12_BsDstKsK.root");
 		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/MC_B2DKspi_DD_12_BsDstKspi.root");
-		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/DMC_B2DKspi_DD_12.root");
 
 
 	  	//P: Needed branches
-  		Double_t B_MM,B_DTF_MM,B_PT,B_IPCHI2_OWNPV,B_FDCHI2_OWNPV,B_TAU,D_ENDVERTEX_Z, B_ENDVERTEX_Z;
+  		Double_t B_MM,B_DTF_MM,B_PT,B_IPCHI2_OWNPV,B_FDCHI2_OWNPV,B_TAU,D_ENDVERTEX_Z, B_ENDVERTEX_Z, eff, as, bs;
   		Double_t D_FDCHI2_ORIVX,D_DIRA_OWNPV,Ks_FDCHI2_ORIVX, D_MM, Ks_MM, ProbNNpi, ProbNNk;
   		Double_t Ks_PT, Ks_DIRA_OWNPV,B_ENDVERTEX_CHI2, TRACK_GhostProb;
   		Double_t K_D_ProbNNk, pi1_D_ProbNNk, pi2_D_ProbNNk, pi_ProbNNk, pim_Ks_ProbNNk, pip_Ks_ProbNNk;
@@ -88,35 +89,40 @@ int main() {
  		tree->SetBranchAddress("pi_hasRich",&pi_hasRich);
  		tree->SetBranchAddress("pim_Ks_hasRich",&pim_Ks_hasRich);
  		tree->SetBranchAddress("pip_Ks_hasRich",&pip_Ks_hasRich);
+
  		
  		//M: Trigger selection
  		tree->SetBranchAddress("B_L0Global_TIS",&B_L0Global_TIS) ;
  		tree->SetBranchAddress("B_L0HadronDecision_TOS",&B_L0HadronDecision_TOS) ;
  		
  		//M: 2011-2012
- 		tree->SetBranchAddress("B_Hlt1TrackAllL0Decision_TOS",&B_Hlt1TrackAllL0Decision_TOS) ;
+/* 		tree->SetBranchAddress("B_Hlt1TrackAllL0Decision_TOS",&B_Hlt1TrackAllL0Decision_TOS) ;
  		tree->SetBranchAddress("B_Hlt2Topo2BodyBBDTDecision_TOS",&B_Hlt2Topo2BodyBBDTDecision_TOS) ;
  		tree->SetBranchAddress("B_Hlt2Topo3BodyBBDTDecision_TOS",&B_Hlt2Topo3BodyBBDTDecision_TOS) ;
  		tree->SetBranchAddress("B_Hlt2Topo4BodyBBDTDecision_TOS",&B_Hlt2Topo4BodyBBDTDecision_TOS) ; 	
+ */
  		
  		//M: 2015-2018	
- 		//tree->SetBranchAddress("B_Hlt1TrackMVADecision_TOS",&B_Hlt1TrackMVADecision_TOS) ;
- 		//tree->SetBranchAddress("B_Hlt1TwoTrackMVADecision_TOS",&B_Hlt1TwoTrackMVADecision_TOS) ;
- 		//tree->SetBranchAddress("B_Hlt2Topo2BodyDecision_TOS",&B_Hlt2Topo2BodyDecision_TOS) ;
- 		//tree->SetBranchAddress("B_Hlt2Topo3BodyDecision_TOS",&B_Hlt2Topo3BodyDecision_TOS) ;
- 		//tree->SetBranchAddress("B_Hlt2Topo4BodyDecision_TOS",&B_Hlt2Topo4BodyDecision_TOS) ;	
+ 		tree->SetBranchAddress("B_Hlt1TrackMVADecision_TOS",&B_Hlt1TrackMVADecision_TOS) ;
+ 		tree->SetBranchAddress("B_Hlt1TwoTrackMVADecision_TOS",&B_Hlt1TwoTrackMVADecision_TOS) ;
+ 		tree->SetBranchAddress("B_Hlt2Topo2BodyDecision_TOS",&B_Hlt2Topo2BodyDecision_TOS) ;
+ 		tree->SetBranchAddress("B_Hlt2Topo3BodyDecision_TOS",&B_Hlt2Topo3BodyDecision_TOS) ;
+ 		tree->SetBranchAddress("B_Hlt2Topo4BodyDecision_TOS",&B_Hlt2Topo4BodyDecision_TOS) ;	
+
 
 		//P: Create output file 
 		TFile* output = new TFile("output.root","RECREATE");
   		TTree* summary_tree = tree->CloneTree(0);
 
     	//P: Add new branches
+    	summary_tree->Branch("B_MM",&B_MM);
     	summary_tree->Branch("B_DTF_MM",&B_DTF_MM);
     	summary_tree->Branch("D_MM",&D_MM);
     	summary_tree->Branch("Ks_MM",&Ks_MM);
  
 		//P: Define some histograms
 		//M: Histograms after the selection
+		TH1F *hB_MM = new TH1F("hB_MM","B_MM after",100,4700,6100);
     	TH1F *hB_DTF_MM = new TH1F("hB_DTF_MM","B_DTF_MM after",100,4700,6100);
    		TH1F *hD_MM = new TH1F("hD_MM","D_MM after",100,1760,1980);
     	TH1F *hKs_MM = new TH1F("hKs_MM","Ks_MM after",100,460,530);
@@ -127,19 +133,17 @@ int main() {
   		for ( Int_t j = 0 ; j < nEvents ; j++ ) {
     		tree->GetEntry(j) ;
     		if (0ul == (j % 2000ul)) cout << "Read event " << j << "/" << nEvents << endl;
-
-		    //P: Add your cuts
-		    
+    
 			//M: Trigger selection:
 			if ((B_L0HadronDecision_TOS || B_L0Global_TIS) != true) continue;
 			
 			//M: 2011-2012
-			if (B_Hlt1TrackAllL0Decision_TOS != true) continue;
-			if ((B_Hlt2Topo2BodyBBDTDecision_TOS || B_Hlt2Topo3BodyBBDTDecision_TOS || B_Hlt2Topo4BodyBBDTDecision_TOS) != true) continue;
+			//if (B_Hlt1TrackAllL0Decision_TOS != true) continue;
+			//if ((B_Hlt2Topo2BodyBBDTDecision_TOS || B_Hlt2Topo3BodyBBDTDecision_TOS || B_Hlt2Topo4BodyBBDTDecision_TOS) != true) continue;
 			
 			//M: 2015-2018
-			//if ((B_Hlt1TrackMVADecision_TOS!= true || B_Hlt1TwoTrackMVADecision_TOS) != true) continue;//2015-2018
-			//if ((B_Hlt2Topo2BodyDecision_TOS!= true || B_Hlt2Topo3BodyDecision_TOS!= true || B_Hlt2Topo4BodyDecision_TOS) != true) continue;
+			if ((B_Hlt1TrackMVADecision_TOS || B_Hlt1TwoTrackMVADecision_TOS) != true) continue;//2015-2018
+			if ((B_Hlt2Topo2BodyDecision_TOS || B_Hlt2Topo3BodyDecision_TOS || B_Hlt2Topo4BodyDecision_TOS) != true) continue;
 		
 		    //M: Ks category
 		    if (KsCat != 1) continue;
@@ -162,29 +166,28 @@ int main() {
 		    //if (B_BKGCAT >= 30) continue; // Only for MC!
 		    		    
 		    //M: PID
-		    //if (K_D_ProbNNpi <= 0.1) continue;//0; - 
-		    if (pi1_D_ProbNNpi <= 0.1) continue; // 0
-		    if (pi2_D_ProbNNpi <= 0.1) continue; // 0
-		    if (pi_ProbNNpi <= 0.1) continue; // 88188
-		    if (pim_Ks_ProbNNpi <= 0.1) continue; // 0
-		    if (pip_Ks_ProbNNpi <= 0.1) continue; // 0
+		    if (pi1_D_ProbNNpi <= 0.1) continue;
+		    if (pi2_D_ProbNNpi <= 0.1) continue;
+		    if (pi_ProbNNpi <= 0.2) continue;
+		    if (pim_Ks_ProbNNpi <= 0.1) continue;
+		    if (pip_Ks_ProbNNpi <= 0.1) continue;
 		    
-		    if (K_D_ProbNNk <= 0.15) continue; // 79926;
-		    //if (pi1_D_ProbNNk <= 0.15) continue; //0 - 
-		    //if (pi2_D_ProbNNk <= 0.15) continue; //0 - 
-		    //if (pi_ProbNNk <= 0.15) continue; //0 - 
-		    //if (pim_Ks_ProbNNk <= 0.15) continue; //0 - 
-		    //if (pip_Ks_ProbNNk <= 0.15) continue; //0 -
+		    if (K_D_ProbNNk <= 0.15) continue;
 		    
-		    if (K_D_hasRich != true) continue; //K_D_hasRich, pi1_D_hasRich, pi2_D_hasRich, pi_D_hasRich, pim_Ks_hasRich, pip_Ks_hasRich
+		    if (K_D_hasRich != true) continue;
 		    if (pi1_D_hasRich != true) continue;
 		    if (pi2_D_hasRich != true) continue;
 		    if (pi_hasRich != true) continue;
 		    if (pim_Ks_hasRich != true) continue;
 		    if (pip_Ks_hasRich != true) continue;
 		    
+		    if (abs(D_MM - 1869.61) >= 30) continue;
+		    
 		    		       
 		    //P: Fill histograms
+            hB_MM -> Fill(B_MM);
+            hB_MM -> SetFillColor(kBlue-7);		    
+		    
             hB_DTF_MM -> Fill(B_DTF_MM);
             hB_DTF_MM -> SetFillColor(kBlue-7);
             
@@ -199,12 +202,26 @@ int main() {
             summary_tree->Fill();
 		}
 
+		bs = tree->GetEntries();
+		as = summary_tree->GetEntries();
+		eff = as/bs;
+
 		cout << "before selection: " << tree->GetEntries() << endl;
 		cout << "after selection: " << summary_tree->GetEntries() << endl;
+		cout << "eff: " << eff << endl;
 
 		output->Write();
 		
 		//M: Canvas
+
+		TCanvas *cB_MM = new TCanvas("ccB_MM","ccB_MM",1400,1000);
+		tree -> SetFillColor(kGreen-5);
+		tree -> SetLineColor(kGreen);
+		tree->Draw("B_MM");
+		hB_MM -> Draw("same");
+		cB_MM -> SaveAs("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Selection/cB_MM.root");
+		cB_MM -> SaveAs("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Selection/cB_MM.eps");
+		
 		TCanvas *cB_DTF_MM = new TCanvas("ccB_DTF_MM","ccB_DTF_MM",1400,1000);
 		tree -> SetFillColor(kGreen-5);
 		tree -> SetLineColor(kGreen);
