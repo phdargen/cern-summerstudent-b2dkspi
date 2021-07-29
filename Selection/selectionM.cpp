@@ -21,13 +21,28 @@ int main() {
 
 	 	//P: Load file		
     	TChain* tree=new TChain("DecayTree","RECREATE");
+		// DD
 		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_11.root");
 		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_12.root");
 		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_15.root");
 		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_16.root");
 		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_17.root");
-		tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_18.root"); 
+		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_DD_18.root"); 
+		// LL
+		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_LL_11.root");
+		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_LL_12.root");
+		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_LL_15.root");
+		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_LL_16.root");
+		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_LL_17.root");
+		tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_LL_18.root"); 
+		
 		//M: MC
+		//DD
+		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/MC_B2DKspi_DD_12.root");
+		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/MC_B2DKspi_DD_12_BdDstKspi.root");
+		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/MC_B2DKspi_DD_12_BsDstKsK.root");
+		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/MC_B2DKspi_DD_12_BsDstKspi.root");
+		//LL
 		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/MC_B2DKspi_DD_12.root");
 		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/MC_B2DKspi_DD_12_BdDstKspi.root");
 		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/MC_B2DKspi_DD_12_BsDstKsK.root");
@@ -66,7 +81,7 @@ int main() {
  		tree->SetBranchAddress("KsCat",&KsCat) ;
  		
  		//M: Only for MC
- 		//tree->SetBranchAddress("B_BKGCAT",&B_BKGCAT);
+ 		tree->SetBranchAddress("B_BKGCAT",&B_BKGCAT);
  		
  		//M: PID
  		tree->SetBranchAddress("K_D_ProbNNk",&K_D_ProbNNk);
@@ -100,10 +115,10 @@ int main() {
  		tree->SetBranchAddress("B_Hlt2Topo2BodyBBDTDecision_TOS",&B_Hlt2Topo2BodyBBDTDecision_TOS) ;
  		tree->SetBranchAddress("B_Hlt2Topo3BodyBBDTDecision_TOS",&B_Hlt2Topo3BodyBBDTDecision_TOS) ;
  		tree->SetBranchAddress("B_Hlt2Topo4BodyBBDTDecision_TOS",&B_Hlt2Topo4BodyBBDTDecision_TOS) ; 	
- */
+*/
  		
  		//M: 2015-2018	
- 		tree->SetBranchAddress("B_Hlt1TrackMVADecision_TOS",&B_Hlt1TrackMVADecision_TOS) ;
+		tree->SetBranchAddress("B_Hlt1TrackMVADecision_TOS",&B_Hlt1TrackMVADecision_TOS) ;
  		tree->SetBranchAddress("B_Hlt1TwoTrackMVADecision_TOS",&B_Hlt1TwoTrackMVADecision_TOS) ;
  		tree->SetBranchAddress("B_Hlt2Topo2BodyDecision_TOS",&B_Hlt2Topo2BodyDecision_TOS) ;
  		tree->SetBranchAddress("B_Hlt2Topo3BodyDecision_TOS",&B_Hlt2Topo3BodyDecision_TOS) ;
@@ -146,7 +161,7 @@ int main() {
 			if ((B_Hlt2Topo2BodyDecision_TOS || B_Hlt2Topo3BodyDecision_TOS || B_Hlt2Topo4BodyDecision_TOS) != true) continue;
 		
 		    //M: Ks category
-		    if (KsCat != 1) continue;
+		    if (KsCat != 0) continue; //if (KsCat != 1) continue; 0 for LL, 1 for DD 
 		    
 		    //M: Kinematic		    
             if (B_PT<=2000) continue;
@@ -213,7 +228,7 @@ int main() {
 		output->Write();
 		
 		//M: Canvas
-
+/*
 		TCanvas *cB_MM = new TCanvas("ccB_MM","ccB_MM",1400,1000);
 		tree -> SetFillColor(kGreen-5);
 		tree -> SetLineColor(kGreen);
@@ -245,7 +260,7 @@ int main() {
 		hKs_MM -> Draw("same");
 		cKs_MM -> SaveAs("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Selection/cKs_MM.root");
 		cKs_MM -> SaveAs("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Selection/cKs_MM.eps");
-		
+*/		
 		output -> Close();
 
 return 0;
