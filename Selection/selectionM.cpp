@@ -34,7 +34,7 @@ int main() {
 		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_LL_15.root");
 		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_LL_16.root");
 		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_LL_17.root");
-		tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_LL_18.root"); 
+		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/Data_B2DKspi_LL_18.root"); 
 		
 		//M: MC
 		//DD
@@ -43,10 +43,10 @@ int main() {
 		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/MC_B2DKspi_DD_12_BsDstKsK.root");
 		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/MC_B2DKspi_DD_12_BsDstKspi.root");
 		//LL
-		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/MC_B2DKspi_DD_12.root");
-		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/MC_B2DKspi_DD_12_BdDstKspi.root");
-		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/MC_B2DKspi_DD_12_BsDstKsK.root");
-		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/MC_B2DKspi_DD_12_BsDstKspi.root");
+		tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/MC_B2DKspi_LL_12.root");
+		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/MC_B2DKspi_LL_12_BdDstKspi.root");
+		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/MC_B2DKspi_LL_12_BsDstKsK.root");
+		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/MC_B2DKspi_LL_12_BsDstKspi.root");
 
 
 	  	//P: Needed branches
@@ -111,19 +111,19 @@ int main() {
  		tree->SetBranchAddress("B_L0HadronDecision_TOS",&B_L0HadronDecision_TOS) ;
  		
  		//M: 2011-2012
-/* 		tree->SetBranchAddress("B_Hlt1TrackAllL0Decision_TOS",&B_Hlt1TrackAllL0Decision_TOS) ;
+ 		tree->SetBranchAddress("B_Hlt1TrackAllL0Decision_TOS",&B_Hlt1TrackAllL0Decision_TOS) ;
  		tree->SetBranchAddress("B_Hlt2Topo2BodyBBDTDecision_TOS",&B_Hlt2Topo2BodyBBDTDecision_TOS) ;
  		tree->SetBranchAddress("B_Hlt2Topo3BodyBBDTDecision_TOS",&B_Hlt2Topo3BodyBBDTDecision_TOS) ;
  		tree->SetBranchAddress("B_Hlt2Topo4BodyBBDTDecision_TOS",&B_Hlt2Topo4BodyBBDTDecision_TOS) ; 	
-*/
+
  		
  		//M: 2015-2018	
-		tree->SetBranchAddress("B_Hlt1TrackMVADecision_TOS",&B_Hlt1TrackMVADecision_TOS) ;
+/*		tree->SetBranchAddress("B_Hlt1TrackMVADecision_TOS",&B_Hlt1TrackMVADecision_TOS) ;
  		tree->SetBranchAddress("B_Hlt1TwoTrackMVADecision_TOS",&B_Hlt1TwoTrackMVADecision_TOS) ;
  		tree->SetBranchAddress("B_Hlt2Topo2BodyDecision_TOS",&B_Hlt2Topo2BodyDecision_TOS) ;
  		tree->SetBranchAddress("B_Hlt2Topo3BodyDecision_TOS",&B_Hlt2Topo3BodyDecision_TOS) ;
  		tree->SetBranchAddress("B_Hlt2Topo4BodyDecision_TOS",&B_Hlt2Topo4BodyDecision_TOS) ;	
-
+*/
 
 		//P: Create output file 
 		TFile* output = new TFile("output.root","RECREATE");
@@ -153,12 +153,12 @@ int main() {
 			if ((B_L0HadronDecision_TOS || B_L0Global_TIS) != true) continue;
 			
 			//M: 2011-2012
-			//if (B_Hlt1TrackAllL0Decision_TOS != true) continue;
-			//if ((B_Hlt2Topo2BodyBBDTDecision_TOS || B_Hlt2Topo3BodyBBDTDecision_TOS || B_Hlt2Topo4BodyBBDTDecision_TOS) != true) continue;
+			if (B_Hlt1TrackAllL0Decision_TOS != true) continue;
+			if ((B_Hlt2Topo2BodyBBDTDecision_TOS || B_Hlt2Topo3BodyBBDTDecision_TOS || B_Hlt2Topo4BodyBBDTDecision_TOS) != true) continue;
 			
 			//M: 2015-2018
-			if ((B_Hlt1TrackMVADecision_TOS || B_Hlt1TwoTrackMVADecision_TOS) != true) continue;//2015-2018
-			if ((B_Hlt2Topo2BodyDecision_TOS || B_Hlt2Topo3BodyDecision_TOS || B_Hlt2Topo4BodyDecision_TOS) != true) continue;
+			//if ((B_Hlt1TrackMVADecision_TOS || B_Hlt1TwoTrackMVADecision_TOS) != true) continue;//2015-2018
+			//if ((B_Hlt2Topo2BodyDecision_TOS || B_Hlt2Topo3BodyDecision_TOS || B_Hlt2Topo4BodyDecision_TOS) != true) continue;
 		
 		    //M: Ks category
 		    if (KsCat != 0) continue; //if (KsCat != 1) continue; 0 for LL, 1 for DD 
@@ -178,7 +178,7 @@ int main() {
 		    //M: Quality
 		   	if (TRACK_GhostProb >= 0.5) continue;
 		    if ((B_ENDVERTEX_CHI2/B_ENDVERTEX_NDOF) >= 10) continue;
-		    //if (B_BKGCAT >= 30) continue; // Only for MC!
+		    if (B_BKGCAT >= 30) continue; // Only for MC!
 		    		    
 		    //M: PID
 		    if (pi1_D_ProbNNpi <= 0.1) continue;
