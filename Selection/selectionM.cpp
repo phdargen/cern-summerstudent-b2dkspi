@@ -43,7 +43,7 @@ int main() {
 		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/MC_B2DKspi_DD_12_BsDstKsK.root");
 		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/MC_B2DKspi_DD_12_BsDstKspi.root");
 		//LL
-		tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/MC_B2DKspi_LL_12.root");
+		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/MC_B2DKspi_LL_12.root");
 		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/MC_B2DKspi_LL_12_BdDstKspi.root");
 		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/MC_B2DKspi_LL_12_BsDstKsK.root");
 		//tree->Add("/home/maria/Work/cern-summerstudent-b2dkspi/Maryia/Data/MC_B2DKspi_LL_12_BsDstKspi.root");
@@ -161,7 +161,7 @@ int main() {
 			//if ((B_Hlt2Topo2BodyDecision_TOS || B_Hlt2Topo3BodyDecision_TOS || B_Hlt2Topo4BodyDecision_TOS) != true) continue;
 		
 		    //M: Ks category
-		    if (KsCat != 0) continue; //if (KsCat != 1) continue; 0 for LL, 1 for DD 
+		    if (KsCat != 1) continue; //if (KsCat != 0) continue; 0 for LL, 1 for DD 
 		    
 		    //M: Kinematic		    
             if (B_PT<=2000) continue;
