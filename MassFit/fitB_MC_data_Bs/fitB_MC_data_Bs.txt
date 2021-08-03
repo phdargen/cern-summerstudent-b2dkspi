@@ -1,0 +1,234 @@
+
+Processing fitB_MC_data.cpp...
+
+[1mRooFit v3.60 -- Developed by Wouter Verkerke and David Kirkby[0m 
+                Copyright (C) 2000-2013 NIKHEF, University of California & Stanford University
+                All rights reserved, please read http://roofit.sourceforge.net/license.txt
+
+[#1] INFO:DataHandling -- RooTreeDataStore::loadValues(data) Skipping event #4 because B_DTF_MM cannot accommodate the value 5922.51
+[#1] INFO:DataHandling -- RooTreeDataStore::loadValues(data) Skipping event #5 because B_DTF_MM cannot accommodate the value 4968.24
+[#1] INFO:DataHandling -- RooTreeDataStore::loadValues(data) Skipping event #10 because B_DTF_MM cannot accommodate the value 4930.3
+[#1] INFO:DataHandling -- RooTreeDataStore::loadValues(data) Skipping event #20 because B_DTF_MM cannot accommodate the value 4931.53
+[#1] INFO:DataHandling -- RooTreeDataStore::loadValues(data) Skipping ...
+[#0] WARNING:DataHandling -- RooTreeDataStore::loadValues(data) Ignored 6994 out-of-range events
+[#0] ERROR:Integration --  RooNumIntFactory::Init : libRooFitMore cannot be loaded. GSL integrators will not beavailable ! 
+[#1] INFO:Minization -- RooMinimizer::optimizeConst: activating const optimization
+[#1] INFO:Minization --  The following expressions have been identified as constant and will be precalculated and cached: (bkg,bkg2,bkg3)
+[#1] INFO:Minization --  The following expressions will be evaluated in cache-and-track mode: (Gauss1,Gauss2,cheby,GaussBs,GaussBs2)
+ **********
+ **    1 **SET PRINT           1
+ **********
+ **********
+ **    2 **SET NOGRAD
+ **********
+ PARAMETER DEFINITIONS:
+    NO.   NAME         VALUE      STEP SIZE      LIMITS
+     1 \sigma_{1}   2.00000e+01  2.00000e+00    1.00000e+01  3.00000e+01
+     2 mean0        5.28000e+03  2.00000e+01    5.15000e+03  5.35000e+03
+     3 mean1        5.28000e+03  2.00000e+01    5.15000e+03  5.35000e+03
+     4 n_Bs         5.59225e+03  1.11840e+03    0.00000e+00  1.11840e+04
+     5 n_bkg4       1.11845e+04  2.23690e+03    0.00000e+00  2.23690e+04
+     6 n_sig1       1.11845e+04  2.23690e+03    0.00000e+00  2.23690e+04
+     7 n_sig2       5.59225e+03  1.11840e+03    0.00000e+00  1.11840e+04
+     8 sigma0       3.00000e+01  3.00000e+00    2.00000e+01  5.00000e+01
+     9 xa1          0.00000e+00  2.00000e-01   -1.00000e+00  1.00000e+00
+    10 xa2          0.00000e+00  1.00000e-01   -5.00000e-01  5.00000e-01
+    11 xa3          0.00000e+00  1.00000e-01   -5.00000e-01  5.00000e-01
+    12 xa4          0.00000e+00  1.00000e-01   -5.00000e-01  5.00000e-01
+    13 xa5          0.00000e+00  1.00000e-01   -5.00000e-01  5.00000e-01
+ **********
+ **    3 **SET ERR         0.5
+ **********
+ **********
+ **    4 **SET PRINT           1
+ **********
+ **********
+ **    5 **SET STR           1
+ **********
+ NOW USING STRATEGY  1: TRY TO BALANCE SPEED AGAINST RELIABILITY
+ **********
+ **    6 **MIGRAD        6500           1
+ **********
+ FIRST CALL TO USER FUNCTION AT NEW START POINT, WITH IFLAG=4.
+ START MIGRAD MINIMIZATION.  STRATEGY  1.  CONVERGENCE WHEN EDM .LT. 1.00e-03
+ FCN=-49837.6 FROM MIGRAD    STATUS=INITIATE      127 CALLS         128 TOTAL
+                     EDM= unknown      STRATEGY= 1      NO ERROR MATRIX       
+  EXT PARAMETER               CURRENT GUESS       STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  \sigma_{1}   2.00000e+01   2.00000e+00   0.00000e+00  -7.47949e+02
+   2  mean0        5.15003e+03   2.00000e+01   0.00000e+00   8.10626e+01
+   3  mean1        5.28000e+03   2.00000e+01   0.00000e+00   6.31579e+02
+   4  n_Bs         5.59225e+03   1.11840e+03   0.00000e+00   5.80778e+03
+   5  n_bkg4       1.11845e+04   2.23690e+03   0.00000e+00   2.07816e+03
+   6  n_sig1       1.11845e+04   2.23690e+03   0.00000e+00   4.74135e+03
+   7  n_sig2       5.59225e+03   1.11840e+03   0.00000e+00   3.63206e+03
+   8  sigma0       4.99738e+01   3.00000e+00   1.96978e+00   3.17726e+01
+   9  xa1          0.00000e+00   2.00000e-01   0.00000e+00   1.13075e+03
+  10  xa2          0.00000e+00   1.00000e-01   0.00000e+00  -1.09332e+03
+  11  xa3          0.00000e+00   1.00000e-01   0.00000e+00   9.11726e+02
+  12  xa4          0.00000e+00   1.00000e-01   0.00000e+00  -8.44851e+00
+  13  xa5          0.00000e+00   1.00000e-01   0.00000e+00  -6.40853e+02
+                               ERR DEF= 0.5
+ MIGRAD MINIMIZATION HAS CONVERGED.
+ MIGRAD WILL VERIFY CONVERGENCE AND ERROR MATRIX.
+ MINUIT WARNING IN HESSE   
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN HESSE   
+ ============== 1.00055 added to diagonal of error matrix
+ COVARIANCE MATRIX CALCULATED SUCCESSFULLY
+ FCN=-58334.3 FROM MIGRAD    STATUS=CONVERGED     844 CALLS         845 TOTAL
+                     EDM=0.000829397    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  \sigma_{1}   2.47621e+01   5.14277e-01   7.78116e-03  -6.04261e-02
+   2  mean0        5.15001e+03   1.22592e+02   5.00000e-01  -5.33546e-06
+   3  mean1        5.27775e+03   4.95431e-01   8.31413e-04  -5.10434e-01
+   4  n_Bs         3.75960e+02   6.31877e+01   3.38709e-03   6.33737e-02
+   5  n_bkg4       1.45788e+04   1.89259e+02   2.11978e-03  -1.32259e-01
+   6  n_sig1       5.17924e+03   1.21378e+02   1.46988e-03   3.00469e-01
+   7  n_sig2       1.35754e-02   4.30492e+01   2.09534e-02  -1.40750e-01
+   8  sigma0       4.99996e+01   6.89209e+00   5.00000e-01   7.73580e-07
+   9  xa1         -8.44935e-01   1.53204e-02   3.61661e-03   8.85425e-02
+  10  xa2          4.76813e-01   1.71356e-02   1.18185e-02   2.20023e-01
+  11  xa3         -2.23275e-01   1.62593e-02   3.59003e-03   3.25042e-02
+  12  xa4          7.62988e-02   1.46595e-02   3.21035e-03  -1.20302e-01
+  13  xa5          1.35364e-02   1.67369e-02   3.31287e-03  -1.59716e-01
+                               ERR DEF= 0.5
+ EXTERNAL ERROR MATRIX.    NDIM=  25    NPAR= 13    ERR DEF=0.5
+ ELEMENTS ABOVE DIAGONAL ARE NOT PRINTED.
+  2.648e-01 
+  3.497e-04  1.238e+00 
+ -1.764e-02 -9.325e-05  2.455e-01 
+ -8.400e+00 -4.422e-02  4.467e+00  3.994e+03 
+ -4.319e+01 -5.884e-01  1.029e+01  6.642e+03  3.582e+04 
+  3.429e+01  1.291e-01 -4.565e+00 -3.271e+03 -1.281e+04  1.473e+04 
+  8.044e-03  1.027e-01 -2.300e-03 -9.827e-01 -1.336e+01  2.936e+00  2.341e+00 
+ -6.567e-06 -8.315e-05  1.782e-06  8.185e-04  1.119e-02 -2.418e-03 -1.970e-03  1.093e-02 
+  6.241e-05  3.576e-06  5.289e-05 -6.413e-03 -1.219e-01  3.290e-02  8.455e-05 -7.369e-08  2.348e-04 
+  3.526e-03  3.482e-05 -9.482e-04 -5.019e-01 -1.504e+00  1.042e+00  7.835e-04 -6.515e-07 -6.488e-05  2.949e-04 
+ -2.125e-03 -5.048e-05  1.127e-03  1.322e-01  7.869e-01 -5.467e-01 -1.146e-03  9.551e-07  1.435e-04 -1.512e-04  2.645e-04 
+ -8.303e-04  3.344e-05 -7.371e-04  4.234e-01  6.389e-01 -3.750e-01  7.642e-04 -6.378e-07 -3.510e-05  3.838e-05 -8.670e-05 
+ -8.303e-04  3.344e-05 -7.371e-04  4.234e-01  6.389e-01 -3.750e-01  7.642e-04 -6.378e-07 -3.510e-05  3.838e-05 -8.670e-05  2.150e-04 
+  3.076e-03 -7.129e-06 -1.116e-04 -5.955e-01 -1.476e+00  1.032e+00 -1.704e-04  1.425e-07  7.338e-05  8.369e-05  6.252e-05 
+  3.076e-03 -7.129e-06 -1.116e-04 -5.955e-01 -1.476e+00  1.032e+00 -1.704e-04  1.425e-07  7.338e-05  8.369e-05  6.252e-05 -1.393e-04  2.802e-04 
+ PARAMETER  CORRELATION COEFFICIENTS  
+       NO.  GLOBAL      1      2      3      4      5      6      7      8      9     10     11     12     13
+        1  0.60506   1.000  0.001 -0.069 -0.258 -0.443  0.549  0.010 -0.000  0.008  0.399 -0.254 -0.110  0.357
+        2  0.06031   0.001  1.000 -0.000 -0.001 -0.003  0.001  0.060 -0.001  0.000  0.002 -0.003  0.002 -0.000
+        3  0.25580  -0.069 -0.000  1.000  0.143  0.110 -0.076 -0.003  0.000  0.007 -0.111  0.140 -0.101 -0.013
+        4  0.76167  -0.258 -0.001  0.143  1.000  0.555 -0.426 -0.010  0.000 -0.007 -0.462  0.129  0.457 -0.563
+        5  0.69826  -0.443 -0.003  0.110  0.555  1.000 -0.557 -0.046  0.001 -0.042 -0.463  0.256  0.230 -0.466
+        6  0.72847   0.549  0.001 -0.076 -0.426 -0.557  1.000  0.016 -0.000  0.018  0.500 -0.277 -0.211  0.508
+        7  0.09686   0.010  0.060 -0.003 -0.010 -0.046  0.016  1.000 -0.012  0.004  0.030 -0.046  0.034 -0.007
+        8  0.01232  -0.000 -0.001  0.000  0.000  0.001 -0.000 -0.012  1.000 -0.000 -0.000  0.001 -0.000  0.000
+        9  0.65336   0.008  0.000  0.007 -0.007 -0.042  0.018  0.004 -0.000  1.000 -0.247  0.576 -0.156  0.286
+       10  0.78392   0.399  0.002 -0.111 -0.462 -0.463  0.500  0.030 -0.000 -0.247  1.000 -0.541  0.152  0.291
+       11  0.80605  -0.254 -0.003  0.140  0.129  0.256 -0.277 -0.046  0.001  0.576 -0.541  1.000 -0.364  0.230
+       12  0.76118  -0.110  0.002 -0.101  0.457  0.230 -0.211  0.034 -0.000 -0.156  0.152 -0.364  1.000 -0.567
+       13  0.80533   0.357 -0.000 -0.013 -0.563 -0.466  0.508 -0.007  0.000  0.286  0.291  0.230 -0.567  1.000
+ ELEMENTS ABOVE DIAGONAL ARE NOT PRINTED.
+ **********
+ **    7 **SET ERR         0.5
+ **********
+ **********
+ **    8 **SET PRINT           1
+ **********
+ **********
+ **    9 **HESSE        6500
+ **********
+ MINUIT WARNING IN HESSE   
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN HESSE   
+ ============== 1.00055 added to diagonal of error matrix
+ COVARIANCE MATRIX CALCULATED SUCCESSFULLY
+ FCN=-58334.3 FROM HESSE     STATUS=OK            135 CALLS         980 TOTAL
+                     EDM=0.000884201    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                INTERNAL      INTERNAL  
+  NO.   NAME      VALUE            ERROR       STEP SIZE       VALUE   
+   1  \sigma_{1}   2.47621e+01   5.20759e-01   3.11246e-04   4.96334e-01
+   2  mean0        5.15001e+03   4.59669e+01   5.00000e-01  -1.55969e+00
+   3  mean1        5.27775e+03   4.95806e-01   1.66283e-04   2.81169e-01
+   4  n_Bs         3.75960e+02   6.40154e+01   1.35484e-04  -1.93958e+00
+   5  n_bkg4       1.45788e+04   1.91747e+02   8.47912e-05   3.08346e-01
+   6  n_sig1       5.17924e+03   1.23378e+02   2.93977e-04  -5.66790e-01
+   7  n_sig2       1.35754e-02   4.30400e+01   4.19068e-03  -1.57300e+00
+   8  sigma0       4.99996e+01   6.89115e+00   1.00000e-01   1.57777e+00
+   9  xa1         -8.44935e-01   1.53034e-02   1.44664e-04  -1.00644e+00
+  10  xa2          4.76813e-01   1.76389e-02   4.72738e-04   1.26506e+00
+  11  xa3         -2.23275e-01   1.63857e-02   1.43601e-04  -4.62906e-01
+  12  xa4          7.62988e-02   1.46429e-02   6.42070e-04   1.53196e-01
+  13  xa5          1.35364e-02   1.68239e-02   6.62573e-04   2.70761e-02
+                               ERR DEF= 0.5
+ EXTERNAL ERROR MATRIX.    NDIM=  25    NPAR= 13    ERR DEF=0.5
+ ELEMENTS ABOVE DIAGONAL ARE NOT PRINTED.
+  2.715e-01 
+ -2.664e-06  1.234e+00 
+ -1.957e-02  7.501e-06  2.458e-01 
+ -9.284e+00 -1.182e-03  4.670e+00  4.099e+03 
+ -4.586e+01 -2.454e-03  1.089e+01  6.967e+03  3.677e+04 
+  3.614e+01  4.114e-04 -4.982e+00 -3.498e+03 -1.350e+04  1.522e+04 
+ -1.192e-04 -1.344e-03  3.295e-05  1.477e-02  1.805e-01 -4.229e-02  2.340e+00 
+  4.849e-08  7.116e-07 -3.388e-08 -2.298e-06 -1.449e-05  1.306e-05  5.585e-06  1.092e-02 
+ -1.437e-05 -1.419e-07  6.769e-05  5.936e-03 -8.718e-02  9.507e-03 -9.590e-07 -6.252e-10  2.343e-04 
+  3.866e-03  4.858e-07 -1.025e-03 -5.465e-01 -1.635e+00  1.135e+00 -1.098e-05  2.062e-09 -6.907e-05  3.126e-04 
+ -2.327e-03 -2.572e-07  1.169e-03  1.605e-01  8.647e-01 -6.034e-01  1.537e-05 -2.186e-09  1.443e-04 -1.615e-04  2.686e-04 
+ -8.315e-04 -7.265e-08 -7.358e-04  4.208e-01  6.379e-01 -3.719e-01 -9.973e-06  1.265e-09 -3.455e-05  3.914e-05 -8.577e-05 
+ -8.315e-04 -7.265e-08 -7.358e-04  4.208e-01  6.379e-01 -3.719e-01 -9.973e-06  1.265e-09 -3.455e-05  3.914e-05 -8.577e-05  2.145e-04 
+  3.253e-03  3.583e-07 -1.534e-04 -6.149e-01 -1.540e+00  1.077e+00  1.822e-06 -1.208e-10  6.998e-05  9.280e-05  5.571e-05 
+  3.253e-03  3.583e-07 -1.534e-04 -6.149e-01 -1.540e+00  1.077e+00  1.822e-06 -1.208e-10  6.998e-05  9.280e-05  5.571e-05 -1.380e-04  2.832e-04 
+ PARAMETER  CORRELATION COEFFICIENTS  
+       NO.  GLOBAL      1      2      3      4      5      6      7      8      9     10     11     12     13
+        1  0.61789   1.000 -0.000 -0.076 -0.278 -0.459  0.562 -0.000  0.000 -0.002  0.420 -0.273 -0.109  0.371
+        2  0.00079  -0.000  1.000  0.000 -0.000 -0.000  0.000 -0.001  0.000 -0.000  0.000 -0.000 -0.000  0.000
+        3  0.25856  -0.076  0.000  1.000  0.147  0.115 -0.081  0.000 -0.000  0.009 -0.117  0.144 -0.101 -0.018
+        4  0.76873  -0.278 -0.000  0.147  1.000  0.567 -0.443  0.000 -0.000  0.006 -0.483  0.153  0.449 -0.571
+        5  0.70765  -0.459 -0.000  0.115  0.567  1.000 -0.571  0.001 -0.000 -0.030 -0.482  0.275  0.227 -0.477
+        6  0.73876   0.562  0.000 -0.081 -0.443 -0.571  1.000 -0.000  0.000  0.005  0.521 -0.298 -0.206  0.519
+        7  0.00127  -0.000 -0.001  0.000  0.000  0.001 -0.000  1.000  0.000 -0.000 -0.000  0.001 -0.000  0.000
+        8  0.00004   0.000  0.000 -0.000 -0.000 -0.000  0.000  0.000  1.000 -0.000  0.000 -0.000  0.000 -0.000
+        9  0.65238  -0.002 -0.000  0.009  0.006 -0.030  0.005 -0.000 -0.000  1.000 -0.255  0.575 -0.154  0.272
+       10  0.79763   0.420  0.000 -0.117 -0.483 -0.482  0.521 -0.000  0.000 -0.255  1.000 -0.557  0.151  0.312
+       11  0.80938  -0.273 -0.000  0.144  0.153  0.275 -0.298  0.001 -0.000  0.575 -0.557  1.000 -0.357  0.202
+       12  0.76055  -0.109 -0.000 -0.101  0.449  0.227 -0.206 -0.000  0.000 -0.154  0.151 -0.357  1.000 -0.560
+       13  0.80758   0.371  0.000 -0.018 -0.571 -0.477  0.519  0.000 -0.000  0.272  0.312  0.202 -0.560  1.000
+ ELEMENTS ABOVE DIAGONAL ARE NOT PRINTED.
+[#1] INFO:Minization -- RooMinimizer::optimizeConst: deactivating const optimization
+result is --------------- 
+
+  RooFitResult: minimized FCN value: -58334.3, estimated distance to minimum: 0.000884201
+                covariance matrix quality: Full, accurate covariance matrix
+                Status : MINIMIZE=0 HESSE=0 
+
+    Floating Parameter    FinalValue +/-  Error   
+  --------------------  --------------------------
+            \sigma_{1}    2.4762e+01 +/-  5.21e-01
+                 mean0    5.1500e+03 +/-  4.60e+01
+                 mean1    5.2777e+03 +/-  4.96e-01
+                  n_Bs    3.7596e+02 +/-  6.40e+01
+                n_bkg4    1.4579e+04 +/-  1.92e+02
+                n_sig1    5.1792e+03 +/-  1.23e+02
+                n_sig2    1.3575e-02 +/-  4.30e+01
+                sigma0    5.0000e+01 +/-  6.89e+00
+                   xa1   -8.4494e-01 +/-  1.53e-02
+                   xa2    4.7681e-01 +/-  1.76e-02
+                   xa3   -2.2328e-01 +/-  1.64e-02
+                   xa4    7.6299e-02 +/-  1.46e-02
+                   xa5    1.3536e-02 +/-  1.68e-02
+
+[#1] INFO:Plotting -- RooAbsPdf::plotOn(pdf) directly selected PDF components: (bkg)
+[#1] INFO:Plotting -- RooAbsPdf::plotOn(pdf) indirectly selected PDF components: (Gauss01)
+[#1] INFO:Plotting -- RooAbsPdf::plotOn(pdf) directly selected PDF components: (bkg2)
+[#1] INFO:Plotting -- RooAbsPdf::plotOn(pdf) indirectly selected PDF components: (Gauss02)
+[#1] INFO:Plotting -- RooAbsPdf::plotOn(pdf) directly selected PDF components: (sig1)
+[#1] INFO:Plotting -- RooAbsPdf::plotOn(pdf) indirectly selected PDF components: (Gauss1)
+[#1] INFO:Plotting -- RooAbsPdf::plotOn(pdf) directly selected PDF components: (sig2)
+[#1] INFO:Plotting -- RooAbsPdf::plotOn(pdf) indirectly selected PDF components: (Gauss2)
+[#1] INFO:Plotting -- RooAbsPdf::plotOn(pdf) directly selected PDF components: (bkg3)
+[#1] INFO:Plotting -- RooAbsPdf::plotOn(pdf) indirectly selected PDF components: (Gauss03)
+[#1] INFO:Plotting -- RooAbsPdf::plotOn(pdf) directly selected PDF components: (bkg4)
+[#1] INFO:Plotting -- RooAbsPdf::plotOn(pdf) indirectly selected PDF components: (cheby)
+[#1] INFO:Plotting -- RooAbsPdf::plotOn(pdf) directly selected PDF components: (bkgs)
+[#1] INFO:Plotting -- RooAbsPdf::plotOn(pdf) indirectly selected PDF components: (GaussBs,means)
+[#1] INFO:Plotting -- RooAbsPdf::plotOn(pdf) directly selected PDF components: (bkgs2)
+[#1] INFO:Plotting -- RooAbsPdf::plotOn(pdf) indirectly selected PDF components: (GaussBs2,means2,n_Bs2)
+chi2 = 1.05817
