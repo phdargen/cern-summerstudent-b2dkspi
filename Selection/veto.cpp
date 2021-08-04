@@ -62,8 +62,8 @@ void veto() {
     //Add new branches
     //...
     
-	TH1F *B0Mass = new TH1F("B0Mass","B0Mass",100,4900,6000);
-	TH1F *B0Mass1 = new TH1F("B0Mass1","B0Mass1",100,4900,6000);
+	TH1F *B0Mass = new TH1F("B0Mass","B0Mass",100,5100,5350);
+	TH1F *B0Mass1 = new TH1F("B0Mass1","B0Mass1",100,5100,5350);
 	TH1F *Misspi1 = new TH1F("Misspi1","Misspi1",100,1769,2169);
 	TH1F *Misspi11 = new TH1F("Misspi11","Misspi11",100,1769,2169);
 	TH1F *Misspi2 = new TH1F("Misspi2","Misspi2",100,1769,2169);
@@ -137,9 +137,9 @@ void veto() {
 	c4->SetGrid();
 
 	c1->cd();
-	B0Mass->Draw("HIST");
 	B0Mass1->SetLineColor(kRed);
-	B0Mass1->Draw("HISTsames");
+	B0Mass1->Draw("HIST");
+	B0Mass->Draw("HISTsames");
 	TLegend leg1(0.7, 0.7, 0.9, 0.9);
 	leg1.AddEntry(B0Mass,"B0 Mass before cut","L");
 	leg1.AddEntry(B0Mass1,"B0 Mass after cut","L");
