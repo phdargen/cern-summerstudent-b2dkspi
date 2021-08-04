@@ -68,8 +68,8 @@ void veto() {
 	TH1F *Misspi11 = new TH1F("Misspi11","Misspi11",100,1769,2169);
 	TH1F *Misspi2 = new TH1F("Misspi2","Misspi2",100,1769,2169);
 	TH1F *Misspi21 = new TH1F("Misspi21","Misspi21",100,1769,2169);
-	TH1F *pitoproton = new TH1F("pitoproton","pitoproton",100,1800,7000);
-	TH1F *pitoproton1 = new TH1F("pitoproton1","pitoproton1",100,1800,7000);
+	TH1F *pitoproton = new TH1F("pitoproton","pitoproton",100,2000,2600);
+	TH1F *pitoproton1 = new TH1F("pitoproton1","pitoproton1",100,2000,2600);
 
 	int nEvents = tree->GetEntries();
 	for ( Int_t j = 0 ; j < nEvents ; j++ ) {
@@ -100,7 +100,7 @@ void veto() {
 		if((abs(misspi2 - mass_Ds) > 50) || (pi2_D_ProbNNpi > 0.7)){
 			Misspi21->Fill(misspi2);
 		}
-		if((abs(missB - mass_B0) > 50) || (pi_ProbNNpi > 0.7)){
+		if((abs(missB - mass_B0) > 50)){
 			B0Mass1->Fill(missB);
 		}
 		if((abs(missp - mass_Lambda_c) > 50) || (pi1_D_ProbNNpi > 0.7)){
@@ -115,8 +115,9 @@ void veto() {
 
 	}
 	B0Mass->Draw("HIST");	
-	//output->Write();
+	output->Write();
 
+	/*
 	float norm = 1000;
 	B0Mass->Scale(norm/B0Mass->Integral());
 	Misspi1->Scale(norm/Misspi1->Integral());
@@ -126,7 +127,7 @@ void veto() {
 	Misspi11->Scale(norm/Misspi11->Integral());
 	Misspi21->Scale(norm/Misspi21->Integral());
 	pitoproton1->Scale(norm/pitoproton1->Integral());
-
+*/
 	TCanvas* c1 = new TCanvas ("c1","B0Mass");
 	TCanvas* c2 = new TCanvas ("c2","Pi1ToKaon");
 	TCanvas* c3 = new TCanvas ("c3","Pi2ToKaon");
@@ -138,8 +139,8 @@ void veto() {
 
 	c1->cd();
 	B0Mass1->SetLineColor(kRed);
-	B0Mass1->Draw("HIST");
-	B0Mass->Draw("HISTsames");
+	B0Mass->Draw("HIST");
+	B0Mass1->Draw("HISTsames");
 	TLegend leg1(0.7, 0.7, 0.9, 0.9);
 	leg1.AddEntry(B0Mass,"B0 Mass before cut","L");
 	leg1.AddEntry(B0Mass1,"B0 Mass after cut","L");
@@ -148,8 +149,8 @@ void veto() {
 
 	c2->cd();
 	Misspi11->SetLineColor(kRed);
-	Misspi11->Draw("HIST");
-	Misspi1->Draw("HISTsames");
+	Misspi1->Draw("HIST");
+	Misspi11->Draw("HISTsames");
 	TLegend leg2(0.7, 0.7, 0.9, 0.9);
 	leg2.AddEntry(Misspi1,"D Mass before cut","L");
 	leg2.AddEntry(Misspi11,"D Mass after cut","L");
@@ -158,8 +159,8 @@ void veto() {
 
 	c3->cd();
 	Misspi21->SetLineColor(kRed);
-	Misspi21->Draw("HIST");
-	Misspi2->Draw("HISTsames");
+	Misspi2->Draw("HIST");
+	Misspi21->Draw("HISTsames");
 	TLegend leg3(0.7, 0.7, 0.9, 0.9);
 	leg3.AddEntry(Misspi2,"D Mass before cut","L");
 	leg3.AddEntry(Misspi21,"D Mass after cut","L");
@@ -176,7 +177,7 @@ void veto() {
 	leg4.DrawClone();
 	c4->SaveAs("PionToProton.pdf");
 
-	//output->Close();	
+	output->Close();	
 }
 
 
