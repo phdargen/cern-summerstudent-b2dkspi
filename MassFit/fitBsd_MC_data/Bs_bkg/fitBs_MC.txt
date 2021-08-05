@@ -1,0 +1,162 @@
+
+Processing fitBs_MC.cpp...
+
+[1mRooFit v3.60 -- Developed by Wouter Verkerke and David Kirkby[0m 
+                Copyright (C) 2000-2013 NIKHEF, University of California & Stanford University
+                All rights reserved, please read http://roofit.sourceforge.net/license.txt
+
+[#1] INFO:DataHandling -- RooTreeDataStore::loadValues(data) Skipping event #637 because B_DTF_MM cannot accommodate the value 4805.4
+[#1] INFO:DataHandling -- RooTreeDataStore::loadValues(data) Skipping event #874 because B_DTF_MM cannot accommodate the value 4853.73
+[#0] WARNING:DataHandling -- RooTreeDataStore::loadValues(data) Ignored 2 out-of-range events
+[#0] ERROR:Integration --  RooNumIntFactory::Init : libRooFitMore cannot be loaded. GSL integrators will not beavailable ! 
+[#1] INFO:Minization -- RooMinimizer::optimizeConst: activating const optimization
+[#1] INFO:Minization --  The following expressions will be evaluated in cache-and-track mode: (Gauss1,Gauss2)
+ **********
+ **    1 **SET PRINT           1
+ **********
+ **********
+ **    2 **SET NOGRAD
+ **********
+ PARAMETER DEFINITIONS:
+    NO.   NAME         VALUE      STEP SIZE      LIMITS
+     1 \sigma_{1}   5.00000e+01  1.20000e+01    0.00000e+00  1.20000e+02
+     2 mean1        5.12000e+03  8.00000e+00    5.10000e+03  5.18000e+03
+     3 mean2        5.18000e+03  4.00000e+00    5.16000e+03  5.20000e+03
+     4 n_sig1       5.42500e+02  1.08500e+02    0.00000e+00  1.08500e+03
+     5 n_sig2       5.42500e+02  1.08500e+02    0.00000e+00  1.08500e+03
+     6 sigma2       5.00000e+00  2.50000e+00    0.00000e+00  4.00000e+01
+ **********
+ **    3 **SET ERR         0.5
+ **********
+ **********
+ **    4 **SET PRINT           1
+ **********
+ **********
+ **    5 **SET STR           1
+ **********
+ NOW USING STRATEGY  1: TRY TO BALANCE SPEED AGAINST RELIABILITY
+ **********
+ **    6 **MIGRAD        3000           1
+ **********
+ FIRST CALL TO USER FUNCTION AT NEW START POINT, WITH IFLAG=4.
+ START MIGRAD MINIMIZATION.  STRATEGY  1.  CONVERGENCE WHEN EDM .LT. 1.00e-03
+ FCN=-105.305 FROM MIGRAD    STATUS=INITIATE       69 CALLS          70 TOTAL
+                     EDM= unknown      STRATEGY= 1      NO ERROR MATRIX       
+  EXT PARAMETER               CURRENT GUESS       STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  \sigma_{1}   5.00000e+01   1.20000e+01   0.00000e+00  -9.51410e+02
+   2  mean1        5.17605e+03   8.00000e+00   0.00000e+00  -1.22093e+01
+   3  mean2        5.19557e+03   4.00000e+00   8.92111e-01   1.72286e+00
+   4  n_sig1       5.42500e+02   1.08500e+02   0.00000e+00  -3.28482e+02
+   5  n_sig2       5.42500e+02   1.08500e+02   0.00000e+00   3.28482e+02
+   6  sigma2       5.00000e+00   2.50000e+00   0.00000e+00  -5.79352e+02
+                               ERR DEF= 0.5
+ MIGRAD MINIMIZATION HAS CONVERGED.
+ MIGRAD WILL VERIFY CONVERGENCE AND ERROR MATRIX.
+ MINUIT WARNING IN HESSE   
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN HESSE   
+ ============== 3.16646 added to diagonal of error matrix
+ COVARIANCE MATRIX CALCULATED SUCCESSFULLY
+ FCN=-761.696 FROM HESSE     STATUS=OK             42 CALLS         364 TOTAL
+                     EDM=0.00428673    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  \sigma_{1}   1.20000e+02   6.51103e-01   2.91335e-03** at limit **
+   2  mean1        5.17996e+03   4.99008e+01   1.28845e-02   9.23776e-02
+   3  mean2        5.18211e+03   1.22483e+00   1.17083e-03  -5.59960e-02
+   4  n_sig1       1.42067e+02   1.88978e+01   8.82246e-04   5.00274e-02
+   5  n_sig2       9.42963e+02   3.35786e+01   1.67029e-03  -4.24408e-03
+   6  sigma2       3.40487e+01   1.02347e+00   1.27959e-03  -4.03947e-02
+                               ERR DEF= 0.5
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 5.88106 added to diagonal of error matrix
+ MIGRAD MINIMIZATION HAS CONVERGED.
+ MIGRAD WILL VERIFY CONVERGENCE AND ERROR MATRIX.
+ COVARIANCE MATRIX CALCULATED SUCCESSFULLY
+ FCN=-761.883 FROM MIGRAD    STATUS=CONVERGED     527 CALLS         528 TOTAL
+                     EDM=1.22196e-06    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  \sigma_{1}   1.20000e+02   6.94740e-01   2.90543e-03** at limit **
+   2  mean1        5.17315e+03   1.06779e+01   9.33178e-03   1.22424e-03
+   3  mean2        5.18224e+03   1.24807e+00   1.17025e-03  -2.40380e-03
+   4  n_sig1       1.42893e+02   1.90885e+01   8.81596e-04  -1.45088e-03
+   5  n_sig2       9.42105e+02   3.40725e+01   1.65909e-03   4.51186e-04
+   6  sigma2       3.39896e+01   1.03497e+00   1.27048e-03   2.72137e-03
+                               ERR DEF= 0.5
+ EXTERNAL ERROR MATRIX.    NDIM=  25    NPAR=  6    ERR DEF=0.5
+  1.385e-06  2.842e-06  2.069e-07  2.215e-05  2.218e-05 -5.770e-07 
+  2.842e-06  1.239e+02 -2.240e+00 -1.058e+01 -1.060e+01  9.435e-01 
+  2.069e-07 -2.240e+00  1.560e+00  2.765e+00  2.769e+00 -1.745e-01 
+  2.215e-05 -1.058e+01  2.765e+00  3.647e+02  2.221e+02 -7.234e+00 
+  2.218e-05 -1.060e+01  2.769e+00  2.221e+02  1.164e+03 -7.245e+00 
+ -5.770e-07  9.435e-01 -1.745e-01 -7.234e+00 -7.245e+00  1.073e+00 
+ PARAMETER  CORRELATION COEFFICIENTS  
+       NO.  GLOBAL      1      2      3      4      5      6
+        1  0.00106   1.000  0.000  0.000  0.001  0.001 -0.000
+        2  0.17252   0.000  1.000 -0.161 -0.050 -0.028  0.082
+        3  0.21414   0.000 -0.161  1.000  0.116  0.065 -0.135
+        4  0.45916   0.001 -0.050  0.116  1.000  0.341 -0.366
+        5  0.35204   0.001 -0.028  0.065  0.341  1.000 -0.205
+        6  0.38948  -0.000  0.082 -0.135 -0.366 -0.205  1.000
+ **********
+ **    7 **SET ERR         0.5
+ **********
+ **********
+ **    8 **SET PRINT           1
+ **********
+ **********
+ **    9 **HESSE        3000
+ **********
+ COVARIANCE MATRIX CALCULATED SUCCESSFULLY
+ FCN=-761.883 FROM HESSE     STATUS=OK             40 CALLS         568 TOTAL
+                     EDM=1.22269e-06    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                INTERNAL      INTERNAL  
+  NO.   NAME      VALUE            ERROR       STEP SIZE       VALUE   
+   1  \sigma_{1}   1.20000e+02   6.94742e-01   5.81086e-04   1.57093e+00
+                                 WARNING -   - ABOVE PARAMETER IS AT LIMIT.
+   2  mean1        5.17315e+03   1.06796e+01   3.73271e-04   9.76758e-01
+   3  mean2        5.18224e+03   1.24835e+00   2.34049e-04   1.12354e-01
+   4  n_sig1       1.42893e+02   1.90903e+01   1.76319e-04  -8.28033e-01
+   5  n_sig2       9.42105e+02   3.40684e+01   6.63637e-05  -3.96962e+00
+   6  sigma2       3.39896e+01   1.03531e+00   5.08192e-05   7.74673e-01
+                               ERR DEF= 0.5
+ EXTERNAL ERROR MATRIX.    NDIM=  25    NPAR=  6    ERR DEF=0.5
+  1.385e-06  7.737e-07  5.446e-08  5.871e-06  5.865e-06 -1.532e-07 
+  7.737e-07  1.239e+02 -2.255e+00 -1.051e+01 -1.051e+01  9.466e-01 
+  5.446e-08 -2.255e+00  1.560e+00  2.769e+00  2.769e+00 -1.755e-01 
+  5.871e-06 -1.051e+01  2.769e+00  3.648e+02  2.219e+02 -7.249e+00 
+  5.865e-06 -1.051e+01  2.769e+00  2.219e+02  1.164e+03 -7.250e+00 
+ -1.532e-07  9.466e-01 -1.755e-01 -7.249e+00 -7.250e+00  1.074e+00 
+ PARAMETER  CORRELATION COEFFICIENTS  
+       NO.  GLOBAL      1      2      3      4      5      6
+        1  0.00028   1.000  0.000  0.000  0.000  0.000 -0.000
+        2  0.17342   0.000  1.000 -0.162 -0.049 -0.028  0.082
+        3  0.21515   0.000 -0.162  1.000  0.116  0.065 -0.136
+        4  0.45932   0.000 -0.049  0.116  1.000  0.341 -0.366
+        5  0.35173   0.000 -0.028  0.065  0.341  1.000 -0.205
+        6  0.39019  -0.000  0.082 -0.136 -0.366 -0.205  1.000
+[#1] INFO:Minization -- RooMinimizer::optimizeConst: deactivating const optimization
+result is --------------- 
+
+  RooFitResult: minimized FCN value: -761.883, estimated distance to minimum: 1.22269e-06
+                covariance matrix quality: Full, accurate covariance matrix
+                Status : MINIMIZE=0 HESSE=0 
+
+    Floating Parameter    FinalValue +/-  Error   
+  --------------------  --------------------------
+            \sigma_{1}    1.2000e+02 +/-  6.95e-01
+                 mean1    5.1731e+03 +/-  1.07e+01
+                 mean2    5.1822e+03 +/-  1.25e+00
+                n_sig1    1.4289e+02 +/-  1.91e+01
+                n_sig2    9.4211e+02 +/-  3.41e+01
+                sigma2    3.3990e+01 +/-  1.04e+00
+
+[#1] INFO:Plotting -- RooAbsPdf::plotOn(pdf) directly selected PDF components: (sig1)
+[#1] INFO:Plotting -- RooAbsPdf::plotOn(pdf) indirectly selected PDF components: (Gauss1)
+[#1] INFO:Plotting -- RooAbsPdf::plotOn(pdf) directly selected PDF components: (sig2)
+[#1] INFO:Plotting -- RooAbsPdf::plotOn(pdf) indirectly selected PDF components: (Gauss2)
+chi2 = 1.14481
