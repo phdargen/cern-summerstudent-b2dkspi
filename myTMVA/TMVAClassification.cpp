@@ -30,16 +30,16 @@ void TMVAClassification( TString myMethodList = "BDTG", TString trainOn = "MC", 
 
    // Input files
    TChain* background = new TChain("DecayTree");
-   TString inDir = "/eos/lhcb/user/p/phdargen/summerStudents21/Stripped/";
+   TString inDir = "/afs/cern.ch/work/m/mbuhayeu/public/cern-summerstudent-b2dkspi-master/Selection/Stripped/";
 
    // Change to your selected files
-   if(Ks == "LL" || Ks == "all")background->Add(inDir+"Data_"+decay+"_LL_12.root");
-   if(Ks == "DD" || Ks == "all")background->Add(inDir+"Data_"+decay+"_DD_12.root");
+   if(Ks == "LL" || Ks == "all")background->Add(inDir+"Data_"+decay+"_LL_12_s.root");
+   if(Ks == "DD" || Ks == "all")background->Add(inDir+"Data_"+decay+"_DD_12_s.root");
 
    TChain* signal = new TChain("DecayTree");
    if(trainOn == "MC"){
-       if(Ks == "LL" || Ks == "all")signal->Add(inDir+"MC_"+decay+"_LL_12.root");
-       if(Ks == "DD" || Ks == "all")signal->Add(inDir+"MC_"+decay+"_DD_12.root");
+       if(Ks == "LL" || Ks == "all")signal->Add(inDir+"MC_"+decay+"_LL_12_s.root");
+       if(Ks == "DD" || Ks == "all")signal->Add(inDir+"MC_"+decay+"_DD_12_s.root");
    }
    else signal->Add("");
 
@@ -96,35 +96,85 @@ void TMVAClassification( TString myMethodList = "BDTG", TString trainOn = "MC", 
    TMVA::Factory *factory = new TMVA::Factory( "TMVAClassification_" + decay + "_" + trainOn + "_" + run + "_" + Ks, outputFile, "!V:!Silent:Color:DrawProgressBar:Transformations=I;D;P;G,D:AnalysisType=Classification" );
 
    signal->SetBranchStatus("*",0);  // disable all branches
-   signal->SetBranchStatus("*PT*",1); 
+   signal->SetBranchStatus("*B_PT*",1);// SetBranchStatus("*PT*",1); 
    signal->SetBranchStatus("*CHI2*",1); 
    signal->SetBranchStatus("weight",1);
    signal->SetBranchStatus("run",1);
    signal->SetBranchStatus("B_DTF_MM",1);
    signal->SetBranchStatus("B_BKGCAT",1);
-
+   signal->SetBranchStatus("B_IPCHI2_OWNPV",1);// M:
+   signal->SetBranchStatus("B_DIRA_OWNPV",1);// M:
+   //signal->SetBranchStatus("B_FDCHI2_OWNPV",1);// M:
+   signal->SetBranchStatus("B_TAU",1);// M:
+//   signal->SetBranchStatus("D_ENDVERTEX_Z",1);// M:
+   signal->SetBranchStatus("B_ENDVERTEX_Z",1);// M:
+   signal->SetBranchStatus("D_FDCHI2_ORIVX",1);// M:
+   //signal->SetBranchStatus("D_DIRA_OWNPV",1);// M:
+   //signal->SetBranchStatus("Ks_FDCHI2_ORIVX",1);// M:
+   signal->SetBranchStatus("Ks_PT",1);// M:
+   //signal->SetBranchStatus("Ks_DIRA_OWNPV",1);// M:
+   signal->SetBranchStatus("B_ENDVERTEX_CHI2",1);// M:
+   signal->SetBranchStatus("pi_ProbNNpi",1);// M:
+   signal->SetBranchStatus("K_D_ProbNNk",1);// M:
+   signal->SetBranchStatus("pi_PT",1);// M:
+   
+   
    background->SetBranchStatus("*",0);  // disable all branches
-   background->SetBranchStatus("*PT*",1); 
+   background->SetBranchStatus("*B_PT*",1);// SetBranchStatus("*PT*",1);
    background->SetBranchStatus("*CHI2*",1); 
    background->SetBranchStatus("weight",1);
    background->SetBranchStatus("run",1);
    background->SetBranchStatus("B_DTF_MM",1);
    background->SetBranchStatus("B_BKGCAT",1);
+   background->SetBranchStatus("B_IPCHI2_OWNPV",1);// M:
+   background->SetBranchStatus("B_DIRA_OWNPV",1);// M:
+   //background->SetBranchStatus("B_FDCHI2_OWNPV",1);// M:
+   background->SetBranchStatus("B_TAU",1);// M:
+//   background->SetBranchStatus("D_ENDVERTEX_Z",1);// M:
+   background->SetBranchStatus("B_ENDVERTEX_Z",1);// M:
+   background->SetBranchStatus("D_FDCHI2_ORIVX",1);// M:
+   //background->SetBranchStatus("D_DIRA_OWNPV",1);// M:
+   //background->SetBranchStatus("Ks_FDCHI2_ORIVX",1);// M:
+   background->SetBranchStatus("Ks_PT",1);// M:
+   //background->SetBranchStatus("Ks_DIRA_OWNPV",1);// M:
+   background->SetBranchStatus("B_ENDVERTEX_CHI2",1);// M:
+   background->SetBranchStatus("pi_ProbNNpi",1);// M:
+   background->SetBranchStatus("K_D_ProbNNk",1);// M:
+   background->SetBranchStatus("pi_PT",1);// M:
+   
 
    // Define the input variables that shall be used for the MVA training
    factory->AddVariable( "B_PT", "B_PT", "MeV", 'F' );
-   factory->AddVariable( "PV_CHI2NDOF", "#chi^{2}_{DTF}/ndf", "", 'F' );
+   factory->AddVariable( "PV_CHI2NDOF", "#chi^{2}_{DTF}/ndf", "", 'F');
+   //factory->AddVariable( "B_IPCHI2_OWNPV", "B_IPCHI2_OWNPV", "", 'F' );// M:
+   //factory->AddVariable( "B_FDCHI2_OWNPV", "B_FDCHI2_OWNPV", "MeV", 'F' );// M:
+   factory->AddVariable( "B_TAU", "B_TAU", "", 'F' );// M:   
+//   factory->AddVariable( "D_ENDVERTEX_Z", "D_ENDVERTEX_Z", "MeV", 'F' );// M:
+   //factory->AddVariable( "B_ENDVERTEX_Z", "B_ENDVERTEX_Z", "MeV", 'F' );// M:
+   factory->AddVariable( "log_D_FDCHI2 := log(D_FDCHI2_ORIVX)", "D ln(D_FDCHI2)", "", 'F' );// M:
+   //factory->AddVariable( "D_DIRA_OWNPV", "D_DIRA_OWNPV", "", 'F' );// M:
+   //factory->AddVariable( "Ks_FDCHI2_ORIVX", "Ks_FDCHI2_ORIVX", "", 'F' );// M:
+   factory->AddVariable( "Ks_PT", "Ks_PT", "", 'F' );// M:
+   //factory->AddVariable( "Ks_DIRA_OWNPV", "Ks_DIRA_OWNPV", "", 'F' );// M:
+   factory->AddVariable( "B_ENDVERTEX_CHI2", "B_ENDVERTEX_CHI2", "", 'F' );// M:
+   factory->AddVariable( "pi_ProbNNpi", "pi_ProbNNpi", "", 'F' );// M:
+   factory->AddVariable( "K_D_ProbNNk", "K_D_ProbNNk", "", 'F' );// M:
+   factory->AddVariable( "log_B_DIRA := log(1-B_DIRA_OWNPV)","B ln(1 - DIRA)","", 'F' );// M:
+   factory->AddVariable( "log_Ks_FDCHI2 := log(Ks_FDCHI2_ORIVX)","Ks ln(FDCHI2)","", 'F' );  // M:
+   factory->AddVariable( "pi_PT", "pi_PT", "", 'F' );// M:
+//   factory->AddVariable( "min_IP := min(pi_IPCHI2_OWNPV, min(B_IPCHI2_OWNPV, min(Ks_IPCHI2_OWNPV, D_IPCHI2_OWNPV)))","minIP","", 'F' );
 
    // global event weights per tree (see below for setting event-wise weights)
    Double_t signalWeight     = 1.0;
    Double_t backgroundWeight = 1.0;
 
    // Apply additional cuts on the signal and background samples (can be different)
-   TCut mycuts;
+   TCut mycuts="PV_CHI2NDOF > 0";;
    //if(run != "all")mycuts += "run == " + run.ReplaceAll("run","");
    if(trainOn == "MC") mycuts += "B_DTF_MM > 5000 && B_DTF_MM < 6000 && B_BKGCAT < 30";
-
-   TCut mycutb = "B_DTF_MM > 5500";
+ 
+   TCut mycutb = "B_DTF_MM > 5500 && PV_CHI2NDOF > 0";
+   
    //if(run != "all")mycutb += "run == " + run;
    
    factory->AddSignalTree    ( signal,     signalWeight     );
