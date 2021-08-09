@@ -102,17 +102,17 @@ void TMVAClassification( TString myMethodList = "BDTG", TString trainOn = "MC", 
    signal->SetBranchStatus("run",1);
    signal->SetBranchStatus("B_DTF_MM",1);
    signal->SetBranchStatus("B_BKGCAT",1);
-   signal->SetBranchStatus("B_IPCHI2_OWNPV",1);// M:
+//   signal->SetBranchStatus("B_IPCHI2_OWNPV",1);// M:
    signal->SetBranchStatus("B_DIRA_OWNPV",1);// M:
-   //signal->SetBranchStatus("B_FDCHI2_OWNPV",1);// M:
+//   signal->SetBranchStatus("B_FDCHI2_OWNPV",1);// M:
    signal->SetBranchStatus("B_TAU",1);// M:
 //   signal->SetBranchStatus("D_ENDVERTEX_Z",1);// M:
    signal->SetBranchStatus("B_ENDVERTEX_Z",1);// M:
    signal->SetBranchStatus("D_FDCHI2_ORIVX",1);// M:
-   //signal->SetBranchStatus("D_DIRA_OWNPV",1);// M:
-   //signal->SetBranchStatus("Ks_FDCHI2_ORIVX",1);// M:
+//   signal->SetBranchStatus("D_DIRA_OWNPV",1);// M:
+   signal->SetBranchStatus("Ks_FDCHI2_ORIVX",1);// M:
    signal->SetBranchStatus("Ks_PT",1);// M:
-   //signal->SetBranchStatus("Ks_DIRA_OWNPV",1);// M:
+//   signal->SetBranchStatus("Ks_DIRA_OWNPV",1);// M:
    signal->SetBranchStatus("B_ENDVERTEX_CHI2",1);// M:
    signal->SetBranchStatus("pi_ProbNNpi",1);// M:
    signal->SetBranchStatus("K_D_ProbNNk",1);// M:
@@ -126,17 +126,17 @@ void TMVAClassification( TString myMethodList = "BDTG", TString trainOn = "MC", 
    background->SetBranchStatus("run",1);
    background->SetBranchStatus("B_DTF_MM",1);
    background->SetBranchStatus("B_BKGCAT",1);
-   background->SetBranchStatus("B_IPCHI2_OWNPV",1);// M:
+//   background->SetBranchStatus("B_IPCHI2_OWNPV",1);// M:
    background->SetBranchStatus("B_DIRA_OWNPV",1);// M:
-   //background->SetBranchStatus("B_FDCHI2_OWNPV",1);// M:
+//   background->SetBranchStatus("B_FDCHI2_OWNPV",1);// M:
    background->SetBranchStatus("B_TAU",1);// M:
 //   background->SetBranchStatus("D_ENDVERTEX_Z",1);// M:
    background->SetBranchStatus("B_ENDVERTEX_Z",1);// M:
    background->SetBranchStatus("D_FDCHI2_ORIVX",1);// M:
-   //background->SetBranchStatus("D_DIRA_OWNPV",1);// M:
-   //background->SetBranchStatus("Ks_FDCHI2_ORIVX",1);// M:
+//   background->SetBranchStatus("D_DIRA_OWNPV",1);// M:
+   background->SetBranchStatus("Ks_FDCHI2_ORIVX",1);// M:
    background->SetBranchStatus("Ks_PT",1);// M:
-   //background->SetBranchStatus("Ks_DIRA_OWNPV",1);// M:
+//   background->SetBranchStatus("Ks_DIRA_OWNPV",1);// M:
    background->SetBranchStatus("B_ENDVERTEX_CHI2",1);// M:
    background->SetBranchStatus("pi_ProbNNpi",1);// M:
    background->SetBranchStatus("K_D_ProbNNk",1);// M:
@@ -146,21 +146,20 @@ void TMVAClassification( TString myMethodList = "BDTG", TString trainOn = "MC", 
    // Define the input variables that shall be used for the MVA training
    factory->AddVariable( "B_PT", "B_PT", "MeV", 'F' );
    factory->AddVariable( "PV_CHI2NDOF", "#chi^{2}_{DTF}/ndf", "", 'F');
-   //factory->AddVariable( "B_IPCHI2_OWNPV", "B_IPCHI2_OWNPV", "", 'F' );// M:
-   //factory->AddVariable( "B_FDCHI2_OWNPV", "B_FDCHI2_OWNPV", "MeV", 'F' );// M:
+//   factory->AddVariable( "B_IPCHI2_OWNPV", "B_IPCHI2_OWNPV", "", 'F' );// M:
+   factory->AddVariable( "log_B_DIRA := log(1-B_DIRA_OWNPV)","B ln(1 - DIRA)","", 'F' );// M:
+//   factory->AddVariable( "B_FDCHI2_OWNPV", "B_FDCHI2_OWNPV", "MeV", 'F' );// M:
    factory->AddVariable( "B_TAU", "B_TAU", "", 'F' );// M:   
 //   factory->AddVariable( "D_ENDVERTEX_Z", "D_ENDVERTEX_Z", "MeV", 'F' );// M:
-   //factory->AddVariable( "B_ENDVERTEX_Z", "B_ENDVERTEX_Z", "MeV", 'F' );// M:
+   factory->AddVariable( "B_ENDVERTEX_Z", "B_ENDVERTEX_Z", "MeV", 'F' );// M:
    factory->AddVariable( "log_D_FDCHI2 := log(D_FDCHI2_ORIVX)", "D ln(D_FDCHI2)", "", 'F' );// M:
-   //factory->AddVariable( "D_DIRA_OWNPV", "D_DIRA_OWNPV", "", 'F' );// M:
-   //factory->AddVariable( "Ks_FDCHI2_ORIVX", "Ks_FDCHI2_ORIVX", "", 'F' );// M:
+//   factory->AddVariable( "D_DIRA_OWNPV", "D_DIRA_OWNPV", "", 'F' );// M:
+      factory->AddVariable( "log_Ks_FDCHI2 := log(Ks_FDCHI2_ORIVX)","Ks ln(FDCHI2)","", 'F' );  // M:
    factory->AddVariable( "Ks_PT", "Ks_PT", "", 'F' );// M:
-   //factory->AddVariable( "Ks_DIRA_OWNPV", "Ks_DIRA_OWNPV", "", 'F' );// M:
+//   factory->AddVariable( "Ks_DIRA_OWNPV", "Ks_DIRA_OWNPV", "", 'F' );// M:
    factory->AddVariable( "B_ENDVERTEX_CHI2", "B_ENDVERTEX_CHI2", "", 'F' );// M:
    factory->AddVariable( "pi_ProbNNpi", "pi_ProbNNpi", "", 'F' );// M:
    factory->AddVariable( "K_D_ProbNNk", "K_D_ProbNNk", "", 'F' );// M:
-   factory->AddVariable( "log_B_DIRA := log(1-B_DIRA_OWNPV)","B ln(1 - DIRA)","", 'F' );// M:
-   factory->AddVariable( "log_Ks_FDCHI2 := log(Ks_FDCHI2_ORIVX)","Ks ln(FDCHI2)","", 'F' );  // M:
    factory->AddVariable( "pi_PT", "pi_PT", "", 'F' );// M:
 //   factory->AddVariable( "min_IP := min(pi_IPCHI2_OWNPV, min(B_IPCHI2_OWNPV, min(Ks_IPCHI2_OWNPV, D_IPCHI2_OWNPV)))","minIP","", 'F' );
 
