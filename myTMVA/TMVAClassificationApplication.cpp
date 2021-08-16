@@ -45,7 +45,7 @@ void TMVAClassificationApplication(TString decay = "B2DKspi", TString dataType =
    TChain* theTree = new TChain("DecayTree");
 
    TString inDir = "/afs/cern.ch/work/m/mbuhayeu/public/cern-summerstudent-b2dkspi-master/";
-   TString outFileName = inDir+"BDTG/";
+   TString outFileName = "/afs/cern.ch/work/m/mbuhayeu/public/cern-summerstudent-b2dkspi-master/Selection/BDTG/";
     
    // Change to your selected files 
    if(dataType == "Data"){ 	  
@@ -115,23 +115,23 @@ void TMVAClassificationApplication(TString decay = "B2DKspi", TString dataType =
    //reader->AddVariable("B_DTF_MM",&r_B_DTF_MM);
    //reader->AddVariable("B_BKGCAT",&r_B_BKGCAT);
    //reader->AddVariable("B_IPCHI2_OWNPV",&r_B_IPCHI2_OWNPV);// M:
+   reader->AddVariable("log_B_DIRA := log(1-B_DIRA_OWNPV)",&r_B_DIRA_OWNPV);// M:
    //reader->AddVariable("B_FDCHI2_OWNPV",&r_B_FDCHI2_OWNPV);// M:
    reader->AddVariable("B_TAU",&r_B_TAU);// M:
-   reader->AddVariable("D_ENDVERTEX_Z",&r_D_ENDVERTEX_Z);// M:
-   //reader->AddVariable("B_ENDVERTEX_Z",&r_B_ENDVERTEX_Z);// M:
+   //reader->AddVariable("D_ENDVERTEX_Z",&r_D_ENDVERTEX_Z);// M:
+   reader->AddVariable("B_ENDVERTEX_Z",&r_B_ENDVERTEX_Z);// M:
    reader->AddVariable("log_D_FDCHI2 := log(D_FDCHI2_ORIVX)",&r_D_FDCHI2_ORIVX);// M:
    //reader->AddVariable("D_DIRA_OWNPV",&r_D_DIRA_OWNPV);// M:
+   reader->AddVariable("log_Ks_FDCHI2 := log(Ks_FDCHI2_ORIVX)",&r_Ks_FDCHI2_ORIVX);// M:
    reader->AddVariable("Ks_PT",&r_Ks_PT);// M:
    //reader->AddVariable("Ks_DIRA_OWNPV",&r_Ks_DIRA_OWNPV);// M:
    reader->AddVariable("B_ENDVERTEX_CHI2",&r_B_ENDVERTEX_CHI2);// M:
    reader->AddVariable("pi_ProbNNpi",&r_pi_ProbNNpi);// M:
    reader->AddVariable("K_D_ProbNNk",&r_K_D_ProbNNk);// M:
-   reader->AddVariable("log_B_DIRA := log(1-B_DIRA_OWNPV)",&r_B_DIRA_OWNPV);// M:
-   reader->AddVariable("log_Ks_FDCHI2 := log(Ks_FDCHI2_ORIVX)",&r_Ks_FDCHI2_ORIVX);// M:
    reader->AddVariable("pi_PT",&r_pi_PT);// M:
 
    // --- Book the MVA methods
-   TString prefix = "myTMVA/weights/TMVAClassification_" + decay + "_" + trainedOn + "_";
+   TString prefix = "/afs/cern.ch/work/m/mbuhayeu/public/cern-summerstudent-b2dkspi-master/myTMVA/weights/TMVAClassification_" + decay + "_" + trainedOn + "_";
 
    // Options used in TMVAClassification.cpp 
    std::vector<TString> weightFiles;
@@ -158,7 +158,7 @@ void TMVAClassificationApplication(TString decay = "B2DKspi", TString dataType =
    //theTree->SetBranchAddress("B_IPCHI2_OWNPV",&B_IPCHI2_OWNPV);// M:
    //theTree->SetBranchAddress("B_FDCHI2_OWNPV",&B_FDCHI2_OWNPV);// M:
    theTree->SetBranchAddress("B_TAU",&B_TAU);// M:
-   //theTree->SetBranchAddress("D_ENDVERTEX_Z",&D_ENDVERTEX_Z);// M:
+   theTree->SetBranchAddress("D_ENDVERTEX_Z",&D_ENDVERTEX_Z);// M:
    theTree->SetBranchAddress("B_ENDVERTEX_Z",&B_ENDVERTEX_Z);// M:
    theTree->SetBranchAddress("D_FDCHI2_ORIVX",&D_FDCHI2_ORIVX);// M:
    //theTree->SetBranchAddress("D_DIRA_OWNPV",&D_DIRA_OWNPV);// M:
