@@ -115,19 +115,19 @@ void TMVAClassificationApplication(TString decay = "B2DKspi", TString dataType =
    //reader->AddVariable("B_DTF_MM",&r_B_DTF_MM);
    //reader->AddVariable("B_BKGCAT",&r_B_BKGCAT);
    //reader->AddVariable("B_IPCHI2_OWNPV",&r_B_IPCHI2_OWNPV);// M:
-   reader->AddVariable("log(1-B_DIRA_OWNPV)",&r_B_DIRA_OWNPV);// M:
    //reader->AddVariable("B_FDCHI2_OWNPV",&r_B_FDCHI2_OWNPV);// M:
    reader->AddVariable("B_TAU",&r_B_TAU);// M:
-   //reader->AddVariable("D_ENDVERTEX_Z",&r_D_ENDVERTEX_Z);// M:
-   reader->AddVariable("B_ENDVERTEX_Z",&r_B_ENDVERTEX_Z);// M:
-   reader->AddVariable("log(D_FDCHI2_ORIVX)",&r_D_FDCHI2_ORIVX);// M:
+   reader->AddVariable("D_ENDVERTEX_Z",&r_D_ENDVERTEX_Z);// M:
+   //reader->AddVariable("B_ENDVERTEX_Z",&r_B_ENDVERTEX_Z);// M:
+   reader->AddVariable("log_D_FDCHI2 := log(D_FDCHI2_ORIVX)",&r_D_FDCHI2_ORIVX);// M:
    //reader->AddVariable("D_DIRA_OWNPV",&r_D_DIRA_OWNPV);// M:
-   reader->AddVariable("log(Ks_FDCHI2_ORIVX)",&r_Ks_FDCHI2_ORIVX);// M:
    reader->AddVariable("Ks_PT",&r_Ks_PT);// M:
    //reader->AddVariable("Ks_DIRA_OWNPV",&r_Ks_DIRA_OWNPV);// M:
    reader->AddVariable("B_ENDVERTEX_CHI2",&r_B_ENDVERTEX_CHI2);// M:
    reader->AddVariable("pi_ProbNNpi",&r_pi_ProbNNpi);// M:
    reader->AddVariable("K_D_ProbNNk",&r_K_D_ProbNNk);// M:
+   reader->AddVariable("log_B_DIRA := log(1-B_DIRA_OWNPV)",&r_B_DIRA_OWNPV);// M:
+   reader->AddVariable("log_Ks_FDCHI2 := log(Ks_FDCHI2_ORIVX)",&r_Ks_FDCHI2_ORIVX);// M:
    reader->AddVariable("pi_PT",&r_pi_PT);// M:
 
    // --- Book the MVA methods
@@ -156,20 +156,21 @@ void TMVAClassificationApplication(TString decay = "B2DKspi", TString dataType =
    Double_t B_DTF_MM, B_IPCHI2_OWNPV, B_DIRA_OWNPV, B_FDCHI2_OWNPV, B_TAU, D_ENDVERTEX_Z, B_ENDVERTEX_Z, D_FDCHI2_ORIVX, D_DIRA_OWNPV, Ks_FDCHI2_ORIVX, Ks_PT, Ks_DIRA_OWNPV, B_ENDVERTEX_CHI2, pi_ProbNNpi, K_D_ProbNNk, pi_PT;
    //theTree->SetBranchAddress("B_DTF_MM",&B_DTF_MM);
    //theTree->SetBranchAddress("B_IPCHI2_OWNPV",&B_IPCHI2_OWNPV);// M:
-   theTree->SetBranchAddress("B_DIRA_OWNPV",&B_DIRA_OWNPV);// M:
    //theTree->SetBranchAddress("B_FDCHI2_OWNPV",&B_FDCHI2_OWNPV);// M:
    theTree->SetBranchAddress("B_TAU",&B_TAU);// M:
    //theTree->SetBranchAddress("D_ENDVERTEX_Z",&D_ENDVERTEX_Z);// M:
    theTree->SetBranchAddress("B_ENDVERTEX_Z",&B_ENDVERTEX_Z);// M:
    theTree->SetBranchAddress("D_FDCHI2_ORIVX",&D_FDCHI2_ORIVX);// M:
    //theTree->SetBranchAddress("D_DIRA_OWNPV",&D_DIRA_OWNPV);// M:
-   theTree->SetBranchAddress("Ks_FDCHI2_ORIVX",&Ks_FDCHI2_ORIVX);// M:
    theTree->SetBranchAddress("Ks_PT",&Ks_PT);// M:
    //theTree->SetBranchAddress("Ks_DIRA_OWNPV",&Ks_DIRA_OWNPV);// M:
    theTree->SetBranchAddress("B_ENDVERTEX_CHI2",&B_ENDVERTEX_CHI2);// M:
    theTree->SetBranchAddress("pi_ProbNNpi",&pi_ProbNNpi);// M:
    theTree->SetBranchAddress("K_D_ProbNNk",&K_D_ProbNNk);// M:
+   theTree->SetBranchAddress("log_B_DIRA := log(1-B_DIRA_OWNPV)",&B_DIRA_OWNPV);// M:
+   theTree->SetBranchAddress("log_Ks_FDCHI2 := log(Ks_FDCHI2_ORIVX)",&Ks_FDCHI2_ORIVX);// M:
    theTree->SetBranchAddress("pi_PT",&pi_PT);// M:   
+
    
    //output file--------------------------------------------------------------------------------------------------------------------------
    Float_t BDTG_response;
@@ -191,20 +192,22 @@ void TMVAClassificationApplication(TString decay = "B2DKspi", TString dataType =
         r_B_PT = float(B_PT);
         r_PV_CHI2NDOF = float(PV_CHI2NDOF);
         //r_B_DTF_MM = float(B_DTF_MM); 
-   		r_B_IPCHI2_OWNPV = float(B_IPCHI2_OWNPV);
-   		r_B_DIRA_OWNPV = float(B_DIRA_OWNPV);  
-   //	r_B_FDCHI2_OWNPV = float(B_FDCHI2_OWNPV);
+// 		r_B_IPCHI2_OWNPV = float(B_IPCHI2_OWNPV);
+//		r_B_FDCHI2_OWNPV = float(B_FDCHI2_OWNPV);
    		r_B_TAU = float(B_TAU);   
    		r_D_ENDVERTEX_Z = float(D_ENDVERTEX_Z);
-   		r_B_ENDVERTEX_Z = float(B_ENDVERTEX_Z);   
-   		r_D_FDCHI2_ORIVX = float(D_FDCHI2_ORIVX);
+// 		r_B_ENDVERTEX_Z = float(B_ENDVERTEX_Z);   
+   		r_D_FDCHI2_ORIVX = float(log(D_FDCHI2_ORIVX));
    //	r_D_DIRA_OWNPV = float(D_DIRA_OWNPV);  
    		r_Ks_PT = float(Ks_PT);
    //	r_Ks_DIRA_OWNPV = float(Ks_DIRA_OWNPV);   
    		r_B_ENDVERTEX_CHI2 = float(B_ENDVERTEX_CHI2);
    		r_pi_ProbNNpi = float(pi_ProbNNpi);
    		r_K_D_ProbNNk = float(K_D_ProbNNk);
+   		r_B_DIRA_OWNPV = float( log(1-B_DIRA_OWNPV) );
+   		r_Ks_FDCHI2_ORIVX = float( log(Ks_FDCHI2_ORIVX) );
    		r_pi_PT = float(pi_PT);
+
         
 
         // Might need to change this depending on your options in TMVAClassification.cpp and your workflow
