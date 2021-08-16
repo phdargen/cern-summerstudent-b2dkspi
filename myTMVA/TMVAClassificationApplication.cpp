@@ -44,18 +44,28 @@ void TMVAClassificationApplication(TString decay = "B2DKspi", TString dataType =
    //---------------------------------------------------------------
    TChain* theTree = new TChain("DecayTree");
 
-   TString inDir = "/afs/cern.ch/work/m/mbuhayeu/public/cern-summerstudent-b2dkspi-master/Selection/";
+   TString inDir = "/afs/cern.ch/work/m/mbuhayeu/public/cern-summerstudent-b2dkspi-master/";
    TString outFileName = inDir+"BDTG/";
     
-   // Change tp your selected files 
+   // Change to your selected files 
    if(dataType == "Data"){ 	  
-    theTree->Add(inDir+"Stripped/Data_"+decay+"_LL_12_s.root");
-    theTree->Add(inDir+"Stripped/Data_"+decay+"_DD_12_s.root");       
+    theTree->Add(inDir+"Selection/Stripped/Data_"+decay+"_LL_11_s.root");
+    theTree->Add(inDir+"Selection/Stripped/Data_"+decay+"_LL_12_s.root");
+    theTree->Add(inDir+"Selection/Stripped/Data_"+decay+"_LL_15_s.root");
+    theTree->Add(inDir+"Selection/Stripped/Data_"+decay+"_LL_16_s.root");
+    theTree->Add(inDir+"Selection/Stripped/Data_"+decay+"_LL_17_s.root");
+    theTree->Add(inDir+"Selection/Stripped/Data_"+decay+"_LL_18_s.root");
+    theTree->Add(inDir+"Selection/Stripped/Data_"+decay+"_DD_11_s.root"); 
+    theTree->Add(inDir+"Selection/Stripped/Data_"+decay+"_DD_12_s.root"); 
+    theTree->Add(inDir+"Selection/Stripped/Data_"+decay+"_DD_15_s.root"); 
+    theTree->Add(inDir+"Selection/Stripped/Data_"+decay+"_DD_16_s.root"); 
+    theTree->Add(inDir+"Selection/Stripped/Data_"+decay+"_DD_17_s.root"); 
+    theTree->Add(inDir+"Selection/Stripped/Data_"+decay+"_DD_18_s.root");       
     outFileName += decay+"_data.root";
    }
    else if(dataType == "MC"){ 	  
-      theTree->Add(inDir+"Stripped/MC_"+decay+"_DD_12_s.root");
-      theTree->Add(inDir+"Stripped/MC_"+decay+"_LL_12_s.root");
+      theTree->Add(inDir+"Selection/Stripped/MC_"+decay+"_DD_12_s.root");
+      theTree->Add(inDir+"Selection/Stripped/MC_"+decay+"_LL_12_s.root");
       outFileName += decay+"_mc.root";
    }
    else {
@@ -121,7 +131,7 @@ void TMVAClassificationApplication(TString decay = "B2DKspi", TString dataType =
    reader->AddVariable("pi_PT",&r_pi_PT);// M:
 
    // --- Book the MVA methods
-   TString prefix = "weights/TMVAClassification_" + decay + "_" + trainedOn + "_";
+   TString prefix = "myTMVA/weights/TMVAClassification_" + decay + "_" + trainedOn + "_";
 
    // Options used in TMVAClassification.cpp 
    std::vector<TString> weightFiles;
