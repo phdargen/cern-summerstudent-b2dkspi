@@ -167,8 +167,8 @@ void TMVAClassificationApplication(TString decay = "B2DKspi", TString dataType =
    theTree->SetBranchAddress("B_ENDVERTEX_CHI2",&B_ENDVERTEX_CHI2);// M:
    theTree->SetBranchAddress("pi_ProbNNpi",&pi_ProbNNpi);// M:
    theTree->SetBranchAddress("K_D_ProbNNk",&K_D_ProbNNk);// M:
-   theTree->SetBranchAddress("log_B_DIRA := log(1-B_DIRA_OWNPV)",&B_DIRA_OWNPV);// M:
-   theTree->SetBranchAddress("log_Ks_FDCHI2 := log(Ks_FDCHI2_ORIVX)",&Ks_FDCHI2_ORIVX);// M:
+   theTree->SetBranchAddress("B_DIRA_OWNPV",&B_DIRA_OWNPV);// M:
+   theTree->SetBranchAddress("Ks_FDCHI2_ORIVX",&Ks_FDCHI2_ORIVX);// M:
    theTree->SetBranchAddress("pi_PT",&pi_PT);// M:   
 
    
