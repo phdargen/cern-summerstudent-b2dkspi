@@ -74,7 +74,7 @@ int main(int argc, char** argv)
 	//RooArgList list =  RooArgList(Ks_MM);
 	RooRealVar BDTG("BDTG", "BDTG", 0.);
 	RooCategory KsCat("KsCat","KsCat") ;
-	KsCat.defineType("DD",1);
+	KsCat.defineType("LL",0);
 	RooArgList list =  RooArgList(Ks_MM,BDTG,KsCat);
 	RooDataSet*  data = new RooDataSet("data","data",tree,list, " KsCat == 0 && BDTG > -0.8512" );
 
