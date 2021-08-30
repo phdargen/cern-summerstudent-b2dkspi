@@ -64,10 +64,8 @@ int main(int argc, char** argv)
     bool binned=false;
     
 	///Load file
-	
-    	TChain* tree = new TChain("DecayTree");
-		tree->Add("/afs/cern.ch/work/m/mbuhayeu/public/cern-summerstudent-b2dkspi-master/Selection/BDTG/B2DKspi_data.root");
-
+   	TChain* tree = new TChain("DecayTree");
+	tree->Add("/afs/cern.ch/work/m/mbuhayeu/public/cern-summerstudent-b2dkspi-master/Selection/BDTG/B2DKspi_data.root");
  
     //Disable all but needed branches
     tree->SetBranchStatus("*",0);  
@@ -79,13 +77,11 @@ int main(int argc, char** argv)
 	RooRealVar Ks_MM("Ks_MM", "", 468., 525.,"MeV");
 
     //Create RooDataSet
-	//RooArgList list =  RooArgList(Ks_MM);
 	RooRealVar BDTG("BDTG", "BDTG", 0.);
 	RooCategory KsCat("KsCat","KsCat") ;
 	KsCat.defineType("DD",1);
 	RooArgList list =  RooArgList(Ks_MM,BDTG,KsCat);
 	RooDataSet*  data = new RooDataSet("data","data",tree,list, " (KsCat == 1) && (BDTG > 0.6422)" );
-	//RooDataSet* data = new RooDataSet("data", "data", tree, list,"");
 
 	RooDataSet* data_small = (RooDataSet*) data->reduce(SelectVars(RooArgSet(Ks_MM)));
 	RooDataHist* data_binned = data_small->binnedClone();
@@ -94,59 +90,94 @@ int main(int argc, char** argv)
     ///Define fit model
 	///----------------
 
-	///Signal model: a single CB function
+	///Signal model: a double CB
 	///-----------------------
-	RooRealVar mean("mean", "mean", 497.67,468.,525.);
-	RooRealVar sigma("sigma", "sigma", 3.8379,0.2,6.);
-	RooRealVar alpha("alpha","alpha",1.7009,0.,10.);
-	RooRealVar n("n","n",1.9225,0.,10.);
-	RooCBShape CB("CB","CB for signal",Ks_MM, mean, sigma, alpha, n);
+	RooRealVar mean("mean", "mean", 4.9906e+02); //4.9788e+02);
+	RooRealVar sigma("sigma", "sigma", 2.4086);//2.0860e+00);
+	RooRealVar alpha("alpha","alpha",3.3064e-01);//2.7019e-01);
+	RooRealVar n("n","n",1.0000e+01);//9.9958e+00);
+	RooCBShape CB0("CB0","CB0 for signal",Ks_MM, mean, sigma, alpha, n);
 
-	RooFormulaVar meanb("meanb","meanb","mean",mean);
-	RooRealVar sigmab("sigmab","sigmab",5.0,0.,5.);
-	RooRealVar alpha2("alpha2","alpha2",0.78303);
-	RooRealVar n2("n2","n2",9.7360);
-	RooCBShape CB2("CB2","CB2 for signal",Ks_MM,meanb,sigmab,alpha2,n);
-        
-	RooRealVar f("f","f",0.59567);
+    RooRealVar sigma1("sigma1", "sigma1", 7.1662e+00);//3.6868);
+    RooRealVar alpha1("alpha1","alpha1",-1.3495e+00);//-1.0718e+00);
+    RooRealVar n1("n1","n1",9.9997e+01);//2.0778e+01);
+    RooCBShape CB1("CB1","CB1 for signal",Ks_MM, mean, sigma1, alpha1, n1);
 
-	RooAbsPdf* sig = new RooAddPdf("sig","sig",RooArgList(CB,CB2), f);
+	RooRealVar f("f","f",9.1484e+02/(1.9272e+03+9.1484e+02));//1.8369e+02/(8.1322e+02+1.8369e+02));//n_sig/n_total
+
+	RooAbsPdf* sig = new RooAddPdf("sig","sig",RooArgList(CB0, CB1), f);
 
 	///Background model
     ///-------------------------
-	RooRealVar mean3("mean3", "mean", 501.18,480.,510.);
-	RooRealVar sigma3("sigma3", "sigma", 5,1.,8.);
-	RooRealVar alpha3("alpha3","alpha",0.96009,0.,80.);
-	RooRealVar n3("n3","n",9.9984,0.,10.);
-	RooCBShape CB3("CB3","CB for signal",Ks_MM, mean3, sigma3, alpha3, n3);
-	//CB1
-	RooRealVar mean4("mean4", "mean4", 497.23,480.,510.); 
-	RooRealVar sigma4("sigma4", "sigma4", 2.2839,1.,5.);
-	RooRealVar alpha4("alpha4","alpha4",1.0350,0.,8.);
-	RooRealVar n4("n4","n4",9.9998,0.,10.);
-	RooCBShape CB4("CB4","CB for signal",Ks_MM, mean4, sigma4, alpha4, n4);
+
+    RooRealVar mean6("mean6", "mean6", 4.9906e+02, 400.,500.); //4.9788e+02,400.,500.);
+    RooCBShape CB6("CB6","CB6 for Bsbkg",Ks_MM, mean6, sigma, alpha, n);
+    RooCBShape CB7("CB7","CB7 for Bsbkg",Ks_MM, mean6, sigma1, alpha1, n1);
+
+    RooAbsPdf* Bsbkg = new RooAddPdf("Bsbkg","Bsbkg",RooArgList(CB6, CB7), f);
+	
+	//Bd part.reco.bkg
+	//CB
+	RooRealVar mean2("mean2", "mean2", 4.9749e+02); 
+	RooRealVar sigma2("sigma2", "sigma2", 1.0000e+01);//5.2499e+00);
+	RooRealVar alpha2("alpha2","alpha2",2.0341e+00);//1.5104e+00);
+	RooRealVar n2("n2","n2",1.1970e+00);//3.2392e+00);
+	RooCBShape CB2("CB2","CB2 for signal",Ks_MM, mean2, sigma2, alpha2, n2);
+	
+	RooRealVar sigma3("sigma3", "sigma3",4.9292e+00); //2.2569e+00);
+	RooRealVar alpha3("alpha3","alpha3",-2.1226e+00);//-1.8925e+00);
+	RooRealVar n3("n3","n3",1.3480e+00);//7.7517e-01);
+	RooCBShape CB3("CB3","CB3 for signal",Ks_MM, mean2, sigma3, alpha3, n3);
+	
+	RooRealVar f2("f2","f2",3.1471e+03/(3.1471e+03+3.1480e+03));//1.1759e+03/(1.1759e+03+9.3722e+02));
+	RooAbsPdf* BdDst = new RooAddPdf("BdDst","BdDst",RooArgList(CB2,CB3),f2);
+	
+	//Bs part.reco.bkg
+	//CB
+	RooRealVar mean4("mean4", "mean4",4.9696e+02);//4.9768e+02); 
+	RooRealVar sigma4("sigma4", "sigma4", 6.5764e+00);//5.2179);
+	RooRealVar alpha4("alpha4","alpha4",1.3417e+00);//1.4733);
+	RooRealVar n4("n4","n4", 9.9999e+00);//4.1241);
+	RooCBShape CB4("CB4","CB4 for signal",Ks_MM, mean4, sigma4, alpha4, n4);
+	
+	RooRealVar sigma5("sigma5", "sigma5", 1.6257e+00);//2.5739);
+	RooRealVar alpha5("alpha5","alpha5", -1.9793e-01);//-1.5394);
+	RooRealVar n5("n5","n5", 9.9998e+00);//1.3978);
+	RooCBShape CB5("CB5","CB5 for signal",Ks_MM, mean4, sigma5, alpha5, n5);
+	
+	RooRealVar f4("f4","f4", 3.3767e+03/(3.3767e+03+9.3307e+02));//1.0869e+03/(1.0869e+03+1.0870e+03));
+	RooAbsPdf* BsDst = new RooAddPdf("BsDst","BsDst",RooArgList(CB4,CB5),f4);
+	
+	//Polynomial
+	RooRealVar coeff3("p3","coeff", 1, 0., 10.);
+	RooPolynomial Poly3("Poly3","Poly signal",Ks_MM,RooArgList(coeff3),1);
+
 
     ///Total pdf
 	///----------------------
 	RooRealVar n_sig("n_sig", "n_sig", data->numEntries()/2., 0., data->numEntries());
 	RooRealVar n_bkg("n_bkg", "n_bkg", data->numEntries()/2., 0., data->numEntries());
-	RooRealVar n_sig1("n_sig1", "n_sig1", data->numEntries()/2., 0., data->numEntries());
-	RooRealVar n_sig2("n_sig2", "n_sig2", data->numEntries()/2., 0., data->numEntries());
+	RooRealVar n_BdDst("n_BdDst", "n_BdDst", data->numEntries()/2., 0., data->numEntries());
+	RooRealVar n_BsDst("n_BsDst", "n_BsDst", data->numEntries()/2., 0., data->numEntries());	
+	RooRealVar n_Bs("n_Bs", "n_Bs", data->numEntries()/2., 0., data->numEntries());
 	
 	//pdf list
-	RooAbsPdf* sig1 = new RooAddPdf("sig1", "sig1", RooArgList(CB, CB2), RooArgList(n_sig, n_bkg));
-	RooAbsPdf* sig2 = new RooAddPdf("sig2", "sig2", RooArgList(CB3, CB4), RooArgList(n_sig1, n_sig2));
+	RooAbsPdf* bkg = new RooAddPdf("bkg", "bkg", Poly3, n_bkg);
 
 	RooArgList pdf0;
 	pdf0.add(*sig);
-	pdf0.add(*sig1);
-	pdf0.add(*sig2);
+	pdf0.add(*BsDst);
+	pdf0.add(*BdDst);
+	pdf0.add(*bkg);
+	pdf0.add(*Bsbkg);
 
 	//N list
 	RooArgList num;
 	num.add(n_sig);
-	num.add(n_sig1);
-	num.add(n_sig2);
+	num.add(n_BsDst);
+	num.add(n_BdDst);
+	num.add(n_bkg);
+	num.add(n_Bs);
 
 	RooAddPdf pdf("pdf","pdf",pdf0,num);
 	///Do an extended Fit
@@ -161,7 +192,7 @@ int main(int argc, char** argv)
 	
     cout << "result is --------------- "<<endl;
 	result->Print(); 
- 
+	
 	///Plot 
 	///----------
 
@@ -169,24 +200,21 @@ int main(int argc, char** argv)
 	
 	data->plotOn(frame_m,Name("Data"));
 	pdf.plotOn(frame_m,Name("FullModel"));
-	pdf.plotOn(frame_m,Components(*sig1),LineColor(3), LineStyle(1), Name("sig1"));
-	pdf.plotOn(frame_m,Components(*sig2),LineColor(9), LineStyle(1), Name("sig2"));
-	pdf.plotOn(frame_m,Components(*sig),LineColor(11), LineStyle(1), Name("sig"));
-	//pdf.plotOn(frame_m,Components(*BsDst),LineColor(5), LineStyle(1), Name("BsDst"));
-	//pdf.plotOn(frame_m,Components(*Bsbkg),LineColor(7), LineStyle(1), Name("Bsbkg"));
-	//pdf.plotOn(frame_m,Components(CB),LineColor(3), LineStyle(1), Name("sig"));
-	//pdf.plotOn(frame_m,Components(cheby),LineColor(11), LineStyle(1), Name("bkg"));
-	//pdf.plotOn(frame_m,Components(*sigBs),LineColor(7), LineStyle(1), Name("Bsbkg"));
+	pdf.plotOn(frame_m,Components(*sig),LineColor(3), LineStyle(1), Name("sig"));
+	pdf.plotOn(frame_m,Components(*bkg),LineColor(11), LineStyle(1), Name("bkg"));
+	pdf.plotOn(frame_m,Components(*BdDst),LineColor(9), LineStyle(1), Name("BdDst"));
+	pdf.plotOn(frame_m,Components(*BsDst),LineColor(5), LineStyle(1), Name("BsDst"));
+	pdf.plotOn(frame_m,Components(*Bsbkg),LineColor(7), LineStyle(1), Name("Bsbkg"));
 
 
 	auto leg = new TLegend(0.7, 0.7, 0.9, 0.9);
 	//leg.SetFillColor(0);
 	leg->AddEntry(frame_m->findObject("FullModel"), "Full Model", "f");
 	leg->AddEntry(frame_m->findObject("sig"), "sig", "f");
-	leg->AddEntry(frame_m->findObject("sig1"), "bkg1", "f");
-	leg->AddEntry(frame_m->findObject("sig2"), "bkg2", "f");
-	//leg.AddEntry(frame_m->findObject("bkg"), "bkg", "f");
-	//leg.AddEntry(frame_m->findObject("Bsbkg"), "Bsbkg", "f");
+	leg->AddEntry(frame_m->findObject("BsDst"), "BsDst", "f");
+	leg->AddEntry(frame_m->findObject("BdDst"), "BdDst", "f");
+	leg->AddEntry(frame_m->findObject("bkg"), "bkg", "f");
+	leg->AddEntry(frame_m->findObject("Bsbkg"), "Bsbkg", "f");
 
 	cout<<"chi2 = "<<frame_m->chiSquare("FullModel","Data")<<endl;
 
@@ -202,24 +230,26 @@ int main(int argc, char** argv)
 
 	TCanvas* c = new TCanvas("fit_chi2residpull","Ks Mass Fit",800,600) ;
 	c->Divide(1,2) ;
-	c->cd(1) ; gPad->SetBorderMode(1); gPad->SetTopMargin(1); gPad->SetBottomMargin(0.15) ; gPad->SetRightMargin(0.03); gPad->SetPad(0.03, 0.27, 0.95, 0.95); frame_m->GetXaxis()->SetTitle("m(DK_{s}#pi) [MeV]");frame_m->Draw() ; leg -> DrawClone();
-	//c->cd(2) ; gPad->SetLeftMargin(0.15) ; frame2->GetYaxis()->SetTitleOffset(1.6) ; frame2->Draw() ;
+	c->cd(1) ; gPad->SetBorderMode(1); gPad->SetTopMargin(1); gPad->SetBottomMargin(0.15) ; gPad->SetRightMargin(0.03); gPad->SetPad(0.03, 0.27, 0.95, 0.95); frame_m->GetXaxis()->SetTitle("m(DK_{s}#pi) [MeV]");frame_m->Draw() ; leg->DrawClone();
+	c->cd(2) ; gPad->SetLeftMargin(0.15) ; frame2->GetYaxis()->SetTitleOffset(1.6) ; frame2->Draw() ;
 	c->cd(2) ; gPad->SetTopMargin(0); gPad->SetPad(0.03, 0.02, 0.95, 0.27); gPad->SetRightMargin(0.03); gPad->SetBottomMargin(0.2); frame3->Draw();
 	 
 	c->SaveAs("/afs/cern.ch/work/m/mbuhayeu/public/cern-summerstudent-b2dkspi-master/MassFit/fit_DD.png");
 
-	Ks_MM.setRange("signal", 497.67 - 50 , 497.67 + 50) ;
-	double bkg1yield = sig1 -> createIntegral(Ks_MM,NormSet(Ks_MM),Range("signal")) ->getVal();	
-	double bkg2yield = sig2 -> createIntegral(Ks_MM,NormSet(Ks_MM),Range("signal")) ->getVal();
+	Ks_MM.setRange("signal", 497.90 - 50 , 497.90 + 50) ;
+	double BdDstyield = BdDst -> createIntegral(Ks_MM,NormSet(Ks_MM),Range("signal")) ->getVal();	
+	double BsDstyield = BsDst -> createIntegral(Ks_MM,NormSet(Ks_MM),Range("signal")) ->getVal();
+	double Bsyield = Bsbkg -> createIntegral(Ks_MM,NormSet(Ks_MM),Range("signal")) ->getVal();
+	double bkgyield = Poly3.createIntegral(Ks_MM,NormSet(Ks_MM),Range("signal")) ->getVal();
 	double sigyield = sig -> createIntegral(Ks_MM,NormSet(Ks_MM),Range("signal")) ->getVal();
 
 	ofstream myfile;
-	myfile.open("/afs/cern.ch/work/m/mbuhayeu/public/cern-summerstudent-b2dkspi-master/MassFit/KsDD.txt");
-	//myfile<<"the BdDst yield: "<<BdDstyield*n_BdDst.getVal()<<"\n";
-	//myfile<<"the BsDst yield: "<<BsDstyield*n_BsDst.getVal()<<"\n";
-	//myfile<<"the Bs yield: "<<Bsyield*n_Bs.getVal()<<"\n";
-	myfile<<"the bkg yield: "<<(bkg1yield+bkg2yield)*n_sig.getVal()<<"<- Bkg"<<"\n";
-	myfile<<"sig yield: "<<sigyield*n_sig.getVal()<<"<- Sig"<<"\n";
+	myfile.open("/afs/cern.ch/work/m/mbuhayeu/public/cern-summerstudent-b2dkspi-master/MassFit/Ks_DD.txt");
+	myfile<<"the BdDst yield: "<<BdDstyield*n_BdDst.getVal()<<"\n";
+	myfile<<"the BsDst yield: "<<BsDstyield*n_BsDst.getVal()<<"\n";
+	myfile<<"the Bs yield: "<<Bsyield*n_Bs.getVal()<<"\n";
+	myfile<<"the 1-order bkg yield: "<<bkgyield*n_bkg.getVal()<<"\n";
+	myfile<<"sig yield: "<<sigyield*n_sig.getVal()<<"\n";
 
 	myfile.close();
 	frame_m->Draw();
@@ -228,3 +258,4 @@ int main(int argc, char** argv)
     return 0;
   
 }
+
