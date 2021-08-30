@@ -94,15 +94,6 @@ int main(int argc, char** argv)
 	RooRealVar alpha1("alpha1","alpha1",-2,-80.,0.);
 	RooRealVar n1("n1","n1",5,0.,100.);
 	RooCBShape CB1("CB1","CB for signal",Ks_MM, mean, sigma1, alpha1, n1);
-
-
-
-	//Y: There's no bkg in MC file. Everything is the "signal"
-	// BKG
-	//Polynomial
-	//RooRealVar coeff("p1","coeff", 1, 0., 10.);
-	//RooPolynomial Poly1("Poly1","Poly signal",Ks_MM,RooArgList(coeff),1);
-	
 	
     ///Total pdf
 	///----------------------
