@@ -56,7 +56,7 @@ using namespace RooFit ;
 using namespace std;
 
 int main(int argc, char** argv)
-//void fitB_MC_reco()
+//void fitKs_MC_recoLL()
 {   
     //Binned or unbinned fit?
     bool binned=false;
@@ -95,16 +95,22 @@ int main(int argc, char** argv)
 
 	//CB
 	RooRealVar mean("mean", "mean", 497.8,480.,510.); 
-	RooRealVar sigma("sigma", "sigma", 4,1.,5.);
+	RooRealVar sigma("sigma", "sigma", 4,1.,10.);
 	RooRealVar alpha("alpha","alpha",2,0.,80.);
 	RooRealVar n("n","n",5,0.,10.);
 	RooCBShape CB("CB","CB for signal",Ks_MM, mean, sigma, alpha, n);
+	
 	//CB1
 	RooRealVar mean1("mean1", "mean1", 497.8,480.,510.); 
 	RooRealVar sigma1("sigma1", "sigma1", 4,1.,5.);
-	RooRealVar alpha1("alpha1","alpha1",2,0.,80.);
+	RooRealVar alpha1("alpha1","alpha1",-2,-80.,0.);
 	RooRealVar n1("n1","n1",5,0.,10.);
-	RooCBShape CB1("CB1","CB for signal",Ks_MM, mean1, sigma1, alpha1, n1);
+	RooCBShape CB1("CB1","CB for signal",Ks_MM, mean, sigma1, alpha1, n1);
+
+	
+	//Polynomial
+	//RooRealVar coeff("p1","coeff", 1, 0., 10.);
+	//RooPolynomial Poly1("Poly1","Poly signal",Ks_MM,RooArgList(coeff),1);
 
 
 	RooRealVar n_sig1("n_sig1", "n_sig1", data->numEntries()/2., 0., data->numEntries());
@@ -132,7 +138,7 @@ int main(int argc, char** argv)
     else result = pdf.fitTo(*data,Save(kTRUE),Extended());
 	
     cout << "result is --------------- "<<endl;
-	result->Print("pr.eps"); 
+	result->Print(); 
  
 	///Plot 
 	///----------
@@ -141,10 +147,12 @@ int main(int argc, char** argv)
 	
 	data->plotOn(frame_m,Name("Data"));
 	pdf.plotOn(frame_m,Name("FullModel"));
-	pdf.plotOn(frame_m,Components(*sig1),LineColor(3), LineStyle(1), Name("sig1"));
+	pdf.plotOn(frame_m,Components(CB),LineColor(3), LineStyle(1), Name("sig1"));
+	pdf.plotOn(frame_m,Components(CB1),LineColor(5), LineStyle(1), Name("sig2"));
 
 	TLegend leg(0.7, 0.7, 0.9, 0.9);
 	leg.AddEntry(frame_m->findObject("sig1"), "sig1", "L");
+	leg.AddEntry(frame_m->findObject("sig2"), "sig2", "L");
 
 	cout<<"chi2 = "<<frame_m->chiSquare("FullModel","Data")<<endl;
         
@@ -166,5 +174,4 @@ int main(int argc, char** argv)
     return 0;
   
 }
-
 
