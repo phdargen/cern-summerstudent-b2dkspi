@@ -56,7 +56,7 @@ using namespace RooFit ;
 using namespace std;
 
 int main(int argc, char** argv)
-//void fitB_MC_reco()
+//void fitKs_MC_recoLL()
 {   
     //Binned or unbinned fit?
     bool binned=false;
@@ -83,19 +83,34 @@ int main(int argc, char** argv)
     ///Define fit model
 	///----------------
 
-	//CB
-	RooRealVar mean("mean", "mean", 490.8,490.,510.); 
-	RooRealVar sigma("sigma", "sigma", 2.5,2.,6.5);
-	RooRealVar alpha("alpha","alpha",6,0.,8.);
-	RooRealVar n("n","n",50,0.,100.);
-	RooCBShape CB("CB","CB for signal",Ks_MM, mean, sigma, alpha, n);
+	///Signal model
+	///-----------------------
 
+    ///Gaussian
+	//RooRealVar mean1("mean1", "mean1", 497.8,480.,520.); 
+	//RooRealVar sigma1("sigma1", "sigma1",1.,0.,4.1);	
+	//RooRealVar width1("width1","width1",50,0,100);
+	//RooGaussian Gauss1("Gauss1", "Gauss1", Ks_MM, mean1, sigma1);
+	//RooBreitWigner BW("BW", "BW", Ks_MM, mean1, width1);
+
+	//CB
+	RooRealVar mean("mean", "mean", 497.8,480.,510.); 
+	RooRealVar sigma("sigma", "sigma", 4,1.,10.);
+	RooRealVar alpha("alpha","alpha",2,0.,80.);
+	RooRealVar n("n","n",5,0.,10.);
+	RooCBShape CB("CB","CB for signal",Ks_MM, mean, sigma, alpha, n);
+	
 	//CB1
-	RooRealVar mean1("mean1", "mean1", 480.8,470.,510.); 
-	RooRealVar sigma1("sigma1", "sigma1", 2.5,0.,6.5);
-	RooRealVar alpha1("alpha1","alpha1",6,0.,8.);
-	RooRealVar n1("n1","n1",50,0.,100.);
-	RooCBShape CB1("CB1","CB for signal",Ks_MM, mean1, sigma1, alpha1, n1);
+	RooRealVar mean1("mean1", "mean1", 497.8,480.,510.); 
+	RooRealVar sigma1("sigma1", "sigma1", 4,1.,5.);
+	RooRealVar alpha1("alpha1","alpha1",-2,-80.,0.);
+	RooRealVar n1("n1","n1",5,0.,10.);
+	RooCBShape CB1("CB1","CB for signal",Ks_MM, mean, sigma1, alpha1, n1);
+
+	
+	//Polynomial
+	//RooRealVar coeff("p1","coeff", 1, 0., 10.);
+	//RooPolynomial Poly1("Poly1","Poly signal",Ks_MM,RooArgList(coeff),1);
 
 
 	RooRealVar n_sig1("n_sig1", "n_sig1", data->numEntries()/2., 0., data->numEntries());
@@ -123,7 +138,7 @@ int main(int argc, char** argv)
     else result = pdf.fitTo(*data,Save(kTRUE),Extended());
 	
     cout << "result is --------------- "<<endl;
-	result->Print("pr.eps"); 
+	result->Print(); 
  
 	///Plot 
 	///----------
@@ -132,15 +147,17 @@ int main(int argc, char** argv)
 	
 	data->plotOn(frame_m,Name("Data"));
 	pdf.plotOn(frame_m,Name("FullModel"));
-	pdf.plotOn(frame_m,Components(*sig1),LineColor(3), LineStyle(1), Name("sig1"));
+	pdf.plotOn(frame_m,Components(CB),LineColor(3), LineStyle(1), Name("sig1"));
+	pdf.plotOn(frame_m,Components(CB1),LineColor(5), LineStyle(1), Name("sig2"));
 
-	TLegend leg(0.7, 0.7, 0.9, 0.9);
-	leg.AddEntry(frame_m->findObject("sig1"), "sig1", "L");
+	auto leg = new TLegend(0.7, 0.7, 0.9, 0.9);
+	leg->AddEntry(frame_m->findObject("sig1"), "sig1", "L");
+	leg->AddEntry(frame_m->findObject("sig2"), "sig2", "L");
 
 	cout<<"chi2 = "<<frame_m->chiSquare("FullModel","Data")<<endl;
         
 	frame_m->Draw();
-	leg.DrawClone();
+	leg->DrawClone();
 
 	RooHist* hpull = frame_m->pullHist("Data","FullModel");
 	RooPlot* frame3 = Ks_MM.frame(Title("Pull Distribution")) ;
@@ -148,14 +165,14 @@ int main(int argc, char** argv)
 	
 	TCanvas* c = new TCanvas("fit_chi2residpull","Ks Mass Fit",800,600) ;
 	c->Divide(1,2) ;
-	c->cd(1) ; gPad->SetBorderMode(1); gPad->SetTopMargin(1); gPad->SetBottomMargin(0.15) ; gPad->SetRightMargin(0.03); gPad->SetPad(0.03, 0.27, 0.95, 0.95); frame_m->GetXaxis()->SetTitle("m(DK_{s}#pi) [MeV]");frame_m->Draw() ; leg.DrawClone();
+	c->cd(1) ; gPad->SetBorderMode(1); gPad->SetTopMargin(1); gPad->SetBottomMargin(0.15) ; gPad->SetRightMargin(0.03); gPad->SetPad(0.03, 0.27, 0.95, 0.95); frame_m->GetXaxis()->SetTitle("m(DK_{s}#pi) [MeV]");frame_m->Draw() ; leg->DrawClone();
 	c->cd(2) ; gPad->SetTopMargin(0); gPad->SetPad(0.03, 0.02, 0.95, 0.27); gPad->SetRightMargin(0.03); gPad->SetBottomMargin(0.2); frame3->Draw();
 	 
+	//c->SaveAs("/afs/cern.ch/work/y/yuxiao/public/KsFit/fitKs_MC_recoLL.png");
 	c->SaveAs("/afs/cern.ch/work/m/mbuhayeu/public/cern-summerstudent-b2dkspi-master/MassFit/fitKs_MC_recoDD.png");
 
 
     return 0;
   
 }
-
 
