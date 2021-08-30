@@ -54,6 +54,7 @@ using namespace RooFit ;
 using namespace std;
 
 int main(int argc, char** argv)
+//void fitKs_MC_LL()
 {   
     //Binned or unbinned fit?
     bool binned=false;
@@ -86,21 +87,29 @@ int main(int argc, char** argv)
 	RooRealVar alpha("alpha","alpha",7.0559,0.,10.);
 	RooRealVar n("n","n",1.10,0.,10.);
 	RooCBShape CB("CB","CB for signal",Ks_MM, mean, sigma, alpha, n);
+	
+	//CB1
+	RooRealVar mean1("mean1", "mean1", 507.,480.,510.); 
+	RooRealVar sigma1("sigma1", "sigma1", 4,1.,10.);
+	RooRealVar alpha1("alpha1","alpha1",-2,-80.,0.);
+	RooRealVar n1("n1","n1",5,0.,100.);
+	RooCBShape CB1("CB1","CB for signal",Ks_MM, mean, sigma1, alpha1, n1);
 
-    //Exponential
-    //RooRealVar exp_par("exp_par", "exp_par", -0.01,-1.,0.); 	
-    //RooExponential exp("exp","exp",Ks_MM,exp_par); 
 
+
+	//Y: There's no bkg in MC file. Everything is the "signal"
+	// BKG
 	//Polynomial
-	RooRealVar coeff("p1","coeff", 1, 0., 10.);
-	RooPolynomial Poly1("Poly1","Poly signal",Ks_MM,RooArgList(coeff),1);
-
+	//RooRealVar coeff("p1","coeff", 1, 0., 10.);
+	//RooPolynomial Poly1("Poly1","Poly signal",Ks_MM,RooArgList(coeff),1);
+	
+	
     ///Total pdf
 	///----------------------
 	RooRealVar n_sig("n_sig", "n_sig", data->numEntries()/2., 0., data->numEntries());
 	RooRealVar n_bkg("n_bkg", "n_bkg", data->numEntries()/2. , 0., data->numEntries());
 
-	RooAbsPdf* pdf=new RooAddPdf("pdf", "pdf", RooArgList(CB, Poly1), RooArgList(n_sig,n_bkg));
+	RooAbsPdf* pdf=new RooAddPdf("pdf", "pdf", RooArgList(CB, CB1), RooArgList(n_sig,n_bkg));
 
 	//RooAddPdf pdf("pdf","pdf",RooArgList(*sig),RooArgList(n_sig1));
 	//RooAddPdf pdf("pdf","pdf",RooArgList(CB,CB2),RooArgList(n_sig1,n_sig2));
@@ -123,8 +132,8 @@ int main(int argc, char** argv)
 	
 	data->plotOn(frame_m,Name("Data"));
 	pdf->plotOn(frame_m,Name("FullModel"));
-	//pdf.plotOn(frame_m,Components(CB),LineColor(3), LineStyle(1), Name(""));
-	//pdf.plotOn(frame_m,Components(CB2),LineColor(5),LineStyle(1), Name("sig2"));
+	pdf->plotOn(frame_m,Components(CB),LineColor(3), LineStyle(1), Name("sig1"));
+	pdf->plotOn(frame_m,Components(CB1),LineColor(5),LineStyle(1), Name("sig2"));
 
 	cout<<"chi2 = "<<frame_m->chiSquare("FullModel","Data")<<endl;
 
@@ -140,13 +149,13 @@ int main(int argc, char** argv)
 	pdf->plotOn(frame_m );
 
     frame_m->Draw();
-	c1->Print("fitKs_MC_LL.eps");
+	c1->Print();
 	
 
 	auto leg = new TLegend(0.7, 0.7, 0.9, 0.9);
 	leg->AddEntry(frame_m->findObject("FullModel"), "Full Model", "L");
-	//leg.AddEntry(frame_m->findObject("sig"),"sig","L");
-	//leg.AddEntry(frame_m->findObject("sig2"),"sig2","L");
+	leg->AddEntry(frame_m->findObject("sig1"),"sig1","L");
+	leg->AddEntry(frame_m->findObject("sig2"),"sig2","L");
 	leg->DrawClone();
 
 	TCanvas* c = new TCanvas("fit_chi2residpull","Ks Mass Fit",800,600) ;
@@ -166,5 +175,4 @@ int main(int argc, char** argv)
 
     return 0;
 }
-
 
