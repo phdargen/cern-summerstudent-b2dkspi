@@ -1,3 +1,0 @@
-BMass->GetEntries(): 450423.00
-BMass0->GetEntries(): 1159626.0
-Efficiency: 0.38842092
